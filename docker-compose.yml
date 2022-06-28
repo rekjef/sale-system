@@ -1,0 +1,34 @@
+version: '3.9'
+services:
+    postgres-db:
+        image: postgres
+        restart: always
+        environment:
+            POSTGRES_PASSWORD: root
+        ports:
+            - 5432:5432
+
+    flask-api:
+        build:
+            context: ./api
+            dockerfile: ./Dockerfile
+        image: sale-system-api
+        ports:
+            - 5000:5000
+        depends_on:
+            - postgres-db
+        volumes:
+            - ./api:/app
+
+    react-ui:
+        build:
+            context: ./ui
+            dockerfile: ./Dockerfile
+        image: sale-system-ui
+        ports:
+            - 3000:3000
+        depends_on:
+            - flask-api
+            - postgres-db
+        volumes:
+            - ./ui:/app
