@@ -4,8 +4,8 @@ WORKDIR /app
 
 COPY ./package.json ./package-lock.json ./
 
-RUN npm ci
+#RUN npm ci
 
 COPY . .
 
-CMD ["npm", "run", "dev:watch"]
+CMD ["npm", "start", "dev:watch"]
