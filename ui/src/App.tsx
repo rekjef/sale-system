@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import './styles.css';
 
@@ -16,20 +16,20 @@ import Profile from './Pages/Profile';
 function App() {
   return (
     <Router>
-        <Header />
+      <Header />
 
-        <Routes>
-            <Route path='/' element={<Home />}/>
-            <Route path='/signin' element={<SignIn />}/>
-            <Route path='/signup' element={<SignUp />}/>
-            <Route path='/logout' element={<LogOut />}/>
-            <Route path='/profile/:username' element={<Profile />}/>
-            
-            // Invalid url
-            <Route path='*' element={<ErrorPage />}/>
-        </Routes>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/logout" element={<LogOut />} />
+        <Route path="/profile/:username" element={<Profile />} />
 
-        <Footer sx={{ mt: 3 }} />
+        {/* Invalid url */}
+        <Route path="*" element={<ErrorPage />} />
+      </Routes>
+
+      <Footer sx={{ mt: 3 }} />
     </Router>
   );
 }

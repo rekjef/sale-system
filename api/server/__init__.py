@@ -1,10 +1,12 @@
 from flask import Flask
 
+
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'aSDCAFB YUOASDVOYUEFYUVASDFVhiaef'
 
-    # SQLAlchemy_DATABASE_URI = f'postgresql://{user}:{password}@{address}:{port}/{pgdata}'
+    # SQLAlchemy_DATABASE_URI =
+    # f'postgresql://{user}:{password}@{address}:{port}/{pgdata}'
 
     from .views import views
     from .auth import auth
