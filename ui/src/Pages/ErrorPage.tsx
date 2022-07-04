@@ -1,13 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class ErrorPage extends Component {
-  render() {
-    return (
-      <div>
-        PageNotFound!
-      </div>
-    );
-  }
+function ErrorPage() {
+  return (
+    <div>
+      PageNotFound!
+    </div>
+  );
 }
 
 export default ErrorPage;

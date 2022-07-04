@@ -4,9 +4,9 @@ import Typography from '@mui/material/Typography';
 
 function Footer(props: any) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography variant="body2" color="text.secondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="https://localhost:3000">
         Your Website
       </Link>
       {' 2022.'}

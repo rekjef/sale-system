@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -9,19 +9,33 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import axios from 'axios';
+import { useSnackbar, VariantType } from 'notistack';
 
 function SignUp() {
+  const { enqueueSnackbar } = useSnackbar();
+
+  const notification = (message: string, type?: VariantType) => {
+    enqueueSnackbar(message, { variant: type });
+  };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const data = {
+      firstName: formData.get('firstName'),
+      lastName: formData.get('lastName'),
       email: formData.get('email'),
       password: formData.get('password'),
     };
-
-    if (!data.email?.toString() || !data.email?.toString()) {
-      alert('Brak danych');
-    }
+    axios.post('/signup', {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      password: data.password,
+    }).then((response) => {
+      notification(response.data.notification.message, response.data.notification.category);
+    });
   };
 
   return (
@@ -41,7 +55,7 @@ function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <Box component="form" method="POST" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -96,7 +110,7 @@ function SignUp() {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="/login" variant="body2">
+              <Link href="/signin" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>

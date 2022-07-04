@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 
-class LogOut extends Component {
-  render() {
-    return (
-      <div />
-    );
-  }
+function LogOut() {
+  return (
+    <div>as</div>
+  );
 }
 
 export default LogOut;
