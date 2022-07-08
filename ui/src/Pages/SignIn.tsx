@@ -1,25 +1,47 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { useSnackbar, VariantType } from 'notistack';
+
+import axios from 'axios';
+import { useGlobalContext } from '../UserContext';
 
 function SignIn() {
+  const { setUser } = useGlobalContext();
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  const notification = (message: string, type?: VariantType) => {
+    enqueueSnackbar(message, { variant: type });
+  };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+    const formData = new FormData(event.currentTarget);
+    const data = {
+      email: formData.get('email'),
+      password: formData.get('password'),
+    };
+
+    axios.post('/signin', {
+      email: data.email,
+      password: data.password,
+    }).then((response) => {
+      notification(response.data.notification.message, response.data.notification.category);
+      setUser({
+        id: response.data.id,
+        email: response.data.id,
+        isLogged: true,
+      });
+      window.location.href = '/';
     });
   };
 
@@ -40,7 +62,7 @@ function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component="form" method="POST" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             required
@@ -61,10 +83,10 @@ function SignIn() {
             id="password"
             autoComplete="current-password"
           />
-          <FormControlLabel
+          {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
-          />
+           /> */}
           <Button
             type="submit"
             fullWidth
@@ -73,18 +95,21 @@ function SignIn() {
           >
             Sign In
           </Button>
-          <Grid container>
-            <Grid item xs>
+          <Grid container justifyContent="flex-end">
+            {/* <Grid item xs>
               <Link href="/" variant="body2">
                 Forgot password?
               </Link>
-            </Grid>
+            </Grid> */}
             <Grid item>
-              <Link href="/" variant="body2">
+              <Link to="/signup">
                 Don&apos;t have an account? Sign Up
               </Link>
             </Grid>
           </Grid>
+          <Link to="/">
+            Go home page
+          </Link>
         </Box>
       </Box>
     </Container>

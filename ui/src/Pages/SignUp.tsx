@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -23,14 +23,14 @@ function SignUp() {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const data = {
-      firstName: formData.get('firstName'),
-      lastName: formData.get('lastName'),
+      first_name: formData.get('first_name'),
+      last_name: formData.get('last_name'),
       email: formData.get('email'),
       password: formData.get('password'),
     };
     axios.post('/signup', {
-      firstName: data.firstName,
-      lastName: data.lastName,
+      first_name: data.first_name,
+      last_name: data.last_name,
       email: data.email,
       password: data.password,
     }).then((response) => {
@@ -60,10 +60,10 @@ function SignUp() {
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="given-name"
-                name="firstName"
+                name="first_name"
                 required
                 fullWidth
-                id="firstName"
+                id="first_name"
                 label="First Name"
                 autoFocus
               />
@@ -72,9 +72,9 @@ function SignUp() {
               <TextField
                 required
                 fullWidth
-                id="lastName"
+                id="last_name"
                 label="Last Name"
-                name="lastName"
+                name="last_name"
                 autoComplete="family-name"
               />
             </Grid>
