@@ -16,9 +16,11 @@ def create_app():
     with app.app_context():
         from .auth import auth
         from .views import views
+        from .offers import offers
 
         app.register_blueprint(views)
         app.register_blueprint(auth)
+        app.register_blueprint(offers)
 
         db.create_all(app=app)
 

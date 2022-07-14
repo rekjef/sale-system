@@ -7,13 +7,13 @@ from werkzeug.security import generate_password_hash, check_password_hash
 auth = Blueprint("auth", __name__)
 
 
-@auth.route("/@me", methods=["GET"])
+@auth.route("/currentuser", methods=["GET"])
 def get_current_user():
     user_id = session.get("user_id")
     if user_id is None:
         return jsonify({"error": "Unauthorized"})
     user = User.query.filter_by(id=user_id).first()
-    return jsonify({"id": user.id, "email": user.email})
+    return jsonify({"id": user.id, "email": user.email, "isLogged": True})
 
 
 @auth.route("/signin", methods=["GET", "POST"])
@@ -45,10 +45,20 @@ def sign_in():
     )
 
 
-@auth.route("/logout", methods=["POST"])
-def logout():
+@auth.route("/signout", methods=["POST"])
+def signout():
     session.pop("user_id")
-    return "200"
+    return (
+        jsonify(
+            {
+                "notification": {
+                    "message": "Logged out",
+                    "category": "success",
+                },
+            }
+        ),
+        "200",
+    )
 
 
 @auth.route("/signup", methods=["GET", "POST"])
@@ -106,4 +116,13 @@ def sign_up():
         db.session.commit()
 
         session["user_id"] = new_user.id
-    return jsonify({"id": new_user.id, "email": new_user.email})
+    return jsonify(
+        {
+            "id": new_user.id,
+            "email": new_user.email,
+            "notification": {
+                "message": "Logged in",
+                "category": "success",
+            },
+        }
+    )

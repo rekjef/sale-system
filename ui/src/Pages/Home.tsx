@@ -6,21 +6,7 @@ function Home() {
   const { user } = useGlobalContext();
   return (
     <div>
-      {!user.isLogged ? (
-        <Link to="/signin">Sign in</Link>
-      ) : (
-        <div>
-          <Link to="/signout">Sign out</Link>
-          <br />
-          User:
-          {' '}
-          {user.email}
-          User id:
-          {' '}
-          {user.id}
-        </div>
-      )}
-
+      {user.isLogged ? <Link to="/offer/1">asd</Link> : <div />}
     </div>
   );
 }

@@ -19,7 +19,9 @@ services:
         ports:
             - 6379:6379
 
-    api:
+    flask:
+        restart:
+            always
         build:
             context: ./api
             dockerfile: ./Dockerfile

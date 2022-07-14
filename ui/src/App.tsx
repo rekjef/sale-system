@@ -16,8 +16,9 @@ import Home from './Pages/Home';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ErrorPage from './Pages/ErrorPage';
-import Profile from './Pages/Profile';
+import AddOffer from './Pages/AddOffer';
 import { UserContext, User, NullUser } from './UserContext';
+import Offer from './Pages/Offer';
 
 function App() {
   const [user, setUser] = useState<User>(NullUser);
@@ -53,7 +54,8 @@ function App() {
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/signout" element={<SignOut />} />
-            <Route path="/profile/:username" element={<Profile />} />
+            <Route path="/add-offer" element={<AddOffer />} />
+            <Route path="/offer/:offerID" element={<Offer />} />
 
             {/* Invalid url */}
             <Route path="*" element={<ErrorPage />} />

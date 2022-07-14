@@ -1,14 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+import { Link, useNavigate } from 'react-router-dom';
+import {
+  Avatar, Box, Button, Container, CssBaseline, Grid, TextField, Typography,
+} from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import { useSnackbar, VariantType } from 'notistack';
 
 import axios from 'axios';
@@ -19,9 +14,11 @@ function SignIn() {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const notification = (message: string, type?: VariantType) => {
-    enqueueSnackbar(message, { variant: type });
+  const notification = (message: string, category?: VariantType) => {
+    enqueueSnackbar(message, { variant: category });
   };
+
+  const navigate = useNavigate();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -41,7 +38,7 @@ function SignIn() {
         email: response.data.id,
         isLogged: true,
       });
-      window.location.href = '/';
+      navigate('/');
     });
   };
 
@@ -67,7 +64,6 @@ function SignIn() {
             margin="normal"
             required
             fullWidth
-            id="email"
             label="Email Address"
             name="email"
             autoComplete="email"
@@ -80,7 +76,6 @@ function SignIn() {
             name="password"
             label="Password"
             type="password"
-            id="password"
             autoComplete="current-password"
           />
           {/* <FormControlLabel
