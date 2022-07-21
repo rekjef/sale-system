@@ -4,13 +4,11 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { SnackbarProvider, useSnackbar } from 'notistack';
 import './App.css';
-import './styles.css';
 
-import { Button } from '@mui/material';
+import { Button, ThemeProvider } from '@mui/material';
 import axios from 'axios';
 import SignUp from './Pages/SignUp';
 import SignIn from './Pages/SignIn';
-import SignOut from './Pages/SignOut';
 import Home from './Pages/Home';
 
 import Header from './components/Header';
@@ -19,6 +17,7 @@ import ErrorPage from './Pages/ErrorPage';
 import AddOffer from './Pages/AddOffer';
 import { UserContext, User, NullUser } from './UserContext';
 import Offer from './Pages/Offer';
+import theme from './Theme';
 
 function App() {
   const [user, setUser] = useState<User>(NullUser);
@@ -34,7 +33,7 @@ function App() {
   function CloseSnackbarAction({ id }: any) {
     const { closeSnackbar } = useSnackbar();
     return (
-      <Button onClick={() => { closeSnackbar(id); }}>
+      <Button sx={{ color: 'white' }} onClick={() => { closeSnackbar(id); }}>
         Dismiss
       </Button>
     );
@@ -42,28 +41,29 @@ function App() {
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
-      <SnackbarProvider
-        maxSnack={3}
-        action={(key) => <CloseSnackbarAction id={key} />}
-      >
-        <Router>
-          <Header />
+      <ThemeProvider theme={theme}>
+        <SnackbarProvider
+          maxSnack={3}
+          action={(key) => <CloseSnackbarAction id={key} />}
+        >
+          <Router>
+            <Header />
 
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/signout" element={<SignOut />} />
-            <Route path="/add-offer" element={<AddOffer />} />
-            <Route path="/offer/:offerID" element={<Offer />} />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/add-offer" element={<AddOffer />} />
+              <Route path="/offer/:offerID" element={<Offer />} />
 
-            {/* Invalid url */}
-            <Route path="*" element={<ErrorPage />} />
-          </Routes>
+              {/* Invalid url */}
+              <Route path="*" element={<ErrorPage />} />
+            </Routes>
 
-          <Footer />
-        </Router>
-      </SnackbarProvider>
+            <Footer />
+          </Router>
+        </SnackbarProvider>
+      </ThemeProvider>
     </UserContext.Provider>
   );
 }

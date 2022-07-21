@@ -5,11 +5,16 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #f1f1f1;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.footer-link {
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .klasa {
@@ -18,5 +23,7 @@ code {
 --amber: #ffbe0bff;
 --magnolia: #f5f0f6ff;
 --pistachio: #8cd867ff;
---oxford-blue: #0e1428ff;*/
+--oxford-blue: #0e1428ff;
+https://coolors.co/247ba0-ffbe0b-f5f0f6-8cd867-0e1428*/
+
 }
