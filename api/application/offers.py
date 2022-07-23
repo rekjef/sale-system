@@ -19,10 +19,12 @@ def addOffer():
         user_id=data["user_id"],
     )
     db.session.add(new_offer)
+    db.session.flush()
     db.session.commit()
     return (
         jsonify(
             {
+                "offer_id": new_offer.id,
                 "notification": {
                     "message": "Offer has been successfully added",
                     "category": "success",
@@ -33,9 +35,9 @@ def addOffer():
     )
 
 
-@offers.route("/get-offer/<offerID>", methods=["GET"])
-def getOffer(offerID):
-    offer = Offer.query.filter_by(id=offerID).first()
+@offers.route("/get-offer/<offer_id>", methods=["GET"])
+def getOffer(offer_id):
+    offer = Offer.query.filter_by(id=offer_id).first()
     if offer:
         creator = User.query.filter_by(id=offer.user_id).first()
         return (
@@ -50,11 +52,12 @@ def getOffer(offerID):
                         "price": offer.price,
                         "condition": offer.condition,
                         "date": offer.date,
-                    },
-                    "creator": {
-                        "first_name": creator.first_name,
-                        "last_name": creator.last_name,
-                        "email": creator.email,
+                        "creator": {
+                            "first_name": creator.first_name,
+                            "last_name": creator.last_name,
+                            "email": creator.email,
+                            "join_date": creator.join_date,
+                        },
                     },
                 }
             ),
@@ -72,3 +75,34 @@ def getOffer(offerID):
         ),
         "400",
     )
+
+
+# default max_count = 6
+@offers.route("/get-latest-offers/", defaults={"max_offer_count": 6}, methods=["GET"])
+@offers.route("/get-latest-offers/<max_offer_count>", methods=["GET"])
+def getLatestOffers(max_offer_count: int):
+    offers = Offer.query.all()
+    response = list()
+    offer_count = 0
+    for offer in offers:
+        offer_count += 1
+        if offer_count > int(max_offer_count):
+            break
+
+        creator = User.query.filter_by(id=offer.user_id).first()
+        offersDict = {
+            "id": offer.id,
+            "title": offer.title,
+            "image": offer.image,
+            "price": offer.price,
+            "condition": offer.condition,
+            "category": offer.category,
+            "date": offer.date,
+            "creator": {
+                "first_name": creator.first_name,
+                "last_name": creator.last_name,
+            },
+        }
+        response.append(offersDict)
+
+    return (jsonify({"offers": response}), "200")

@@ -19,6 +19,12 @@ type offerType = {
   price: number,
   condition: string,
   date: string,
+  creator: {
+    first_name: string,
+    last_name: string,
+    email: string,
+    join_date: string,
+  },
 };
 
 function Home() {
@@ -70,8 +76,14 @@ function Home() {
                   <AccountCircleIcon />
                 </Avatar>
                 <Box sx={{ ml: 2 }}>
-                  Tadeusz Soplica
-                  <Typography color="text.secondary" variant="body2">Joined in 2022</Typography>
+                  {offer?.creator.first_name}
+                  {' '}
+                  {offer?.creator.last_name}
+                  <Typography color="text.secondary" variant="body2">
+                    Joined in
+                    {' '}
+                    {offer?.creator.join_date.split(' ')[3]}
+                  </Typography>
                 </Box>
               </Grid>
               <Box sx={{ p: 2, pt: 0 }}>

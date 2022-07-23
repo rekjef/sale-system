@@ -91,20 +91,12 @@ function SignIn() {
             Sign In
           </Button>
           <Grid container justifyContent="flex-end">
-            {/* <Grid item xs>
-              <Link href="/" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid> */}
             <Grid item>
               <Link to="/signup">
                 Don&apos;t have an account? Sign Up
               </Link>
             </Grid>
           </Grid>
-          <Link to="/">
-            Go home page
-          </Link>
         </Box>
       </Box>
     </Container>

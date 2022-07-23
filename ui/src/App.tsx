@@ -18,6 +18,7 @@ import AddOffer from './Pages/AddOffer';
 import { UserContext, User, NullUser } from './UserContext';
 import Offer from './Pages/Offer';
 import theme from './Theme';
+import Profile from './Pages/Profile';
 
 function App() {
   const [user, setUser] = useState<User>(NullUser);
@@ -55,6 +56,7 @@ function App() {
               <Route path="/signup" element={<SignUp />} />
               <Route path="/add-offer" element={<AddOffer />} />
               <Route path="/offer/:offerID" element={<Offer />} />
+              <Route path="/profile/:userID" element={<Profile />} />
 
               {/* Invalid url */}
               <Route path="*" element={<ErrorPage />} />

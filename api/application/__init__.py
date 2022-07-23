@@ -25,3 +25,8 @@ def create_app():
         db.create_all(app=app)
 
         return app
+
+
+def update_database_tables(app):
+    db.drop_all()
+    db.create_all(app=app)

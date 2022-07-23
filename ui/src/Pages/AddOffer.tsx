@@ -5,6 +5,7 @@ import {
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { useSnackbar, VariantType } from 'notistack';
 import { useGlobalContext } from '../UserContext';
 
@@ -15,6 +16,8 @@ function AddOffer() {
 
   const { user } = useGlobalContext();
   const { enqueueSnackbar } = useSnackbar();
+
+  const navigate = useNavigate();
 
   const notification = (message: string, type?: VariantType) => {
     enqueueSnackbar(message, { variant: type });
@@ -34,6 +37,9 @@ function AddOffer() {
     };
     axios.post('add-offer', data).then((response) => {
       notification(response.data.notification.message, response.data.notification.category);
+      if (response.data.notification.category === 'success') {
+        navigate(`/offer/${response.data.offer_id}`);
+      }
     });
   };
 
@@ -108,10 +114,10 @@ function AddOffer() {
                   label="Category"
                   onChange={(event: SelectChangeEvent) => setCategory(event.target.value)}
                 >
-                  <MenuItem value="women">Women</MenuItem>
-                  <MenuItem value="men">Men</MenuItem>
-                  <MenuItem value="kids">Kids</MenuItem>
-                  <MenuItem value="home">Home</MenuItem>
+                  <MenuItem value="Women">Women</MenuItem>
+                  <MenuItem value="Men">Men</MenuItem>
+                  <MenuItem value="Kids">Kids</MenuItem>
+                  <MenuItem value="Home">Home</MenuItem>
                 </Select>
               </FormControl>
             </Grid>

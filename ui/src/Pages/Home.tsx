@@ -1,14 +1,25 @@
 import {
-  Box, Button, Container, Grid, Typography,
+  Box, Button, Container, Grid, Typography, Divider,
 } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { useGlobalContext } from '../UserContext';
 import frontPageImage from '../assets/images/front_page.jpg';
+import OfferCard, { OfferCardProps, OfferWithCreatorType } from '../components/OfferCard';
 
 function Home() {
   const { user } = useGlobalContext();
   const navigate = useNavigate();
+  const [latestOffers, setLatestOffers] = useState<OfferWithCreatorType[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const response = await axios.get('/get-latest-offers/');
+      setLatestOffers(response.data.offers);
+    })();
+  }, []);
+
   return (
     <Box>
       {/* https://www.pexels.com/photo/assorted-clothes-996329/ */}
@@ -46,6 +57,37 @@ function Home() {
           </Grid>
         </Container>
       </Box>
+
+      <Container sx={{ mt: 4 }}>
+        <Typography variant="h6" sx={{ mb: 1 }}>
+          Latest offers
+        </Typography>
+        <Divider />
+        <Grid container spacing={2} sx={{ mt: 1 }}>
+          {latestOffers.map((_offer: OfferWithCreatorType) => (
+            <Grid item xs={12} md={4}>
+              <OfferCard
+                key="{_offer}"
+                data={{
+                  id: _offer.id,
+                  title: _offer.title,
+                  image: _offer.image,
+                  price: _offer.price,
+                  condition: _offer.condition,
+                  category: _offer.category,
+                  date: _offer.date,
+                }}
+                creator={{
+                  email: _offer.creator.email,
+                  first_name: _offer.creator.first_name,
+                  last_name: _offer.creator.last_name,
+                }}
+              />
+            </Grid>
+          ))}
+
+        </Grid>
+      </Container>
     </Box>
   );
 }

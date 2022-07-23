@@ -22,4 +22,5 @@ class User(db.Model):
     last_name = db.Column(db.String(150))
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
+    join_date = db.Column(db.DateTime(timezone=True), default=func.now())
     offers = db.relationship("Offer")

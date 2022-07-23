@@ -45,8 +45,8 @@ function Header() {
     <AppBar position="static">
       <Box sx={{ bgcolor: 'themeBackground.main', width: 1 }}>
         <Container maxWidth="xl" sx={{ py: 1 }}>
-          <Typography variant="body2" color="text.secondary" align="center">
-            FREE DELIVERY AND RETURN
+          <Typography fontWeight="bold" variant="body2" color="text.secondary" align="center">
+            * FREE DELIVERY AND RETURN *
           </Typography>
         </Container>
       </Box>
@@ -109,7 +109,7 @@ function Header() {
                     open={Boolean(anchorEl)}
                     onClose={handleClose}
                   >
-                    <MenuItem onClick={() => { handleClose(); navigate('/profile'); }}>
+                    <MenuItem onClick={() => { handleClose(); navigate(`/profile/${user.id}`); }}>
                       Profile
                     </MenuItem>
                     <MenuItem onClick={() => { handleClose(); signOut(); }}>Sign out</MenuItem>
