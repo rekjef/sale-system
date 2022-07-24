@@ -12,7 +12,6 @@ import { useGlobalContext } from '../UserContext';
 function AddOffer() {
   const [condition, setCondition] = useState('');
   const [category, setCategory] = useState('');
-  const [isPriceInvalid, setIsPriceInvalid] = useState(false);
 
   const { user } = useGlobalContext();
   const { enqueueSnackbar } = useSnackbar();

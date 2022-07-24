@@ -1,5 +1,4 @@
 import { createTheme, PaletteColorOptions } from '@mui/material';
-import React from 'react';
 import { amber, blue } from '@mui/material/colors';
 
 declare module '@mui/material/styles' {

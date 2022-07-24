@@ -5,7 +5,7 @@ import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import noOfferImage from '../assets/images/no-offer-image.png';
 
-export type OfferWithCreatorType = {
+export type OfferWithSellerType = {
   'id': number,
   'title': string,
   'image': string,
@@ -13,7 +13,7 @@ export type OfferWithCreatorType = {
   'condition': boolean,
   'category': string,
   'date': string,
-  'creator': {
+  'seller': {
     'email': string,
     'first_name': string,
     'last_name': string
@@ -30,21 +30,21 @@ export type OfferCardProps = {
     'category': string,
     'date': string,
   },
-  creator: {
+  seller: {
     'email': string,
     'first_name': string,
     'last_name': string,
   },
 }
 
-function OfferCard({ data, creator }: OfferCardProps) {
+function OfferCard({ data, seller }: OfferCardProps) {
   const navigate = useNavigate();
   return (
     <Card sx={{ width: 1, boxShadow: 3, borderRadius: 2 }}>
       <CardMedia
         component="img"
-        height="140"
-        image={noOfferImage}
+        sx={{ width: 'auto', height: 180, mx: 'auto' }}
+        image={data.image === '' ? noOfferImage : data.image}
         alt="Offer's image"
       />
 
@@ -52,8 +52,8 @@ function OfferCard({ data, creator }: OfferCardProps) {
 
       <CardContent>
         <Grid container>
-          <Grid item xs md>
-            <Typography gutterBottom variant="h5" component="div">
+          <Grid item minHeight={71} xs md>
+            <Typography gutterBottom variant="h6" component="div">
               {data.title}
             </Typography>
           </Grid>
@@ -76,7 +76,7 @@ function OfferCard({ data, creator }: OfferCardProps) {
             </Typography>
           </Grid>
           <Grid item xs={6} md={6}>
-            <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'right' }}>
+            <Typography variant="body2" color="text.secondary" textAlign="right">
               Category:
               {' '}
               {data.category}
@@ -89,8 +89,18 @@ function OfferCard({ data, creator }: OfferCardProps) {
               {data.condition ? 'New' : 'Used'}
             </Typography>
           </Grid>
+          <Grid item xs={6} md={6}>
+            <Typography variant="body2" color="text.secondary" textAlign="right">
+              Seller:
+              {' '}
+              {seller.first_name}
+              {' '}
+              {seller.last_name}
+            </Typography>
+          </Grid>
         </Grid>
       </CardContent>
+
       <CardActions>
         <Button onClick={() => navigate(`/offer/${data.id}`)} sx={{ width: 1 }} variant="contained" color="secondary">Check it out</Button>
       </CardActions>

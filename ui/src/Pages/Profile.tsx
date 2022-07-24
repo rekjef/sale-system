@@ -69,10 +69,10 @@ function Profile() {
 
               <Grid container sx={{ mt: 1 }} spacing={2}>
                 {offers.map((_offer: OfferCardProps['data']) => (
-                  <Grid item key="{_offer}" xs={12} md={4}>
+                  <Grid item key={_offer.id} xs={12} md={4}>
                     <OfferCard
                       data={_offer}
-                      creator={{
+                      seller={{
                         email: profile.email,
                         first_name: profile.first_name,
                         last_name: profile.last_name,

@@ -1,42 +1,51 @@
-# Sale-system
+# SaleSystem - items exchange service
 
-Sale-system is a shop dashboard for managing customer orders.
+SaleSystem is a platform that allows users to sell or buy items.
+You can create account to post your offers or look through already posted ones.
+Inspired by [vinted.pl](https://www.vinted.com)
 
 ## Tech Stack
 
-**Client:** React, TypeScript, Material-UI
+**Frontend:** React, TypeScript, Material-UI
 
-**Server:** Flask, PostgreSQL
+**Backend:** Flask
+
+**Database:** PostgreSQL, Redis
 
 **Other**: Docker
 
-
 ## Installation
 
-Clone the project
+Clone the project and build it in Docker Compose
 
 ```bash
-  git clone https://github.com/rekjef/sale-system.git
+docker-compose build
 ```
 
-Go to the project directory and run it via Docker
+## Run Locally
+
+Run the app using Docker
 
 ```bash
-  docker-compose up -d
+  docker-compose up
 ```
 
-Lastly open this app in a browser on localhost:3000
+Close the app by typing
+
+```bash
+  docker-compose down
+```
+
 ## Environment Variables
 
-To run this project, you don't need to change anything in .env file. 
+Config and environment variables are located in:
 
-## Running Tests
-
-To run tests, run the following command
-
-```bash
-  npm run test
-```
-
+- api/.env
+- api/config.py
 
 ## Screenshots
+
+![HomePage](/ui/src/assets/images/readme_screenshots/home_page.png)
+![OfferPage](/ui/src/assets/images/readme_screenshots/offer_page.png)
+![UserPage](/ui/src/assets/images/readme_screenshots/user_page.png)
+![AddOfferPage](/ui/src/assets/images/readme_screenshots/addOffer_page.png)

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import {
   Avatar,
@@ -7,7 +7,6 @@ import {
 } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MessageIcon from '@mui/icons-material/Message';
-import { useGlobalContext } from '../UserContext';
 import noOfferImage from '../assets/images/no-offer-image.png';
 
 type offerType = {
@@ -19,7 +18,8 @@ type offerType = {
   price: number,
   condition: string,
   date: string,
-  creator: {
+  seller: {
+    id: number,
     first_name: string,
     last_name: string,
     email: string,
@@ -27,11 +27,27 @@ type offerType = {
   },
 };
 
-function Home() {
-  const { user } = useGlobalContext();
-  const { offerID } = useParams();
-  const [offer, setOffer] = useState<offerType | null>(null);
+const blankOffer = {
+  id: -1,
+  title: '',
+  description: '',
+  image: '',
+  category: '',
+  price: -1,
+  condition: '',
+  date: '',
+  seller: {
+    id: -1,
+    first_name: '',
+    last_name: '',
+    email: '',
+    join_date: '',
+  },
+};
 
+function OfferPage() {
+  const { offerID } = useParams();
+  const [offer, setOffer] = useState<offerType>(blankOffer);
   useEffect(() => {
     (async () => {
       const response = await axios.get(`/get-offer/${offerID}`);
@@ -57,7 +73,7 @@ function Home() {
               bgcolor: 'themeWhite.main', borderRadius: 2, boxShadow: 2, width: 1,
             }}
           >
-            <Grid item component="img" alt="No offer's image" src={noOfferImage} sx={{ height: 233, mx: 'auto' }} />
+            <Grid item component="img" alt="No offer's image" src={offer.image === '' ? noOfferImage : offer.image} sx={{ height: 233, mx: 'auto' }} />
           </Grid>
         </Grid>
 
@@ -76,13 +92,17 @@ function Home() {
                   <AccountCircleIcon />
                 </Avatar>
                 <Box sx={{ ml: 2 }}>
-                  {offer?.creator.first_name}
-                  {' '}
-                  {offer?.creator.last_name}
+                  <Link to={`/profile/${offer.seller.id}`} style={{ textDecoration: 'none' }}>
+                    <Typography variant="body2" color="text.primary">
+                      {offer.seller.first_name}
+                      {' '}
+                      {offer.seller.last_name}
+                    </Typography>
+                  </Link>
                   <Typography color="text.secondary" variant="body2">
                     Joined in
                     {' '}
-                    {offer?.creator.join_date.split(' ')[3]}
+                    {offer.seller.join_date.split(' ')[3]}
                   </Typography>
                 </Box>
               </Grid>
@@ -102,7 +122,7 @@ function Home() {
             }}
             >
               <Box sx={{ mb: 1 }}>
-                {offer?.title}
+                {offer.title}
               </Box>
 
               <Divider />
@@ -111,19 +131,19 @@ function Home() {
                 <Typography color="text.secondary" variant="body2">
                   Condition:
                   {' '}
-                  {offer?.condition ? 'New' : 'Used'}
+                  {offer.condition ? 'New' : 'Used'}
                 </Typography>
 
                 <Typography color="text.secondary" variant="body2">
                   Category:
                   {' '}
-                  {offer?.category}
+                  {offer.category}
                 </Typography>
 
                 <Typography color="text.secondary" variant="body2">
                   Price:
                   {' '}
-                  {offer?.price}
+                  {offer.price}
                   $
                 </Typography>
               </Box>
@@ -153,7 +173,7 @@ function Home() {
             <Divider />
 
             <Typography sx={{ mt: 1 }}>
-              {offer?.description}
+              {offer.description}
             </Typography>
           </Box>
         </Grid>
@@ -162,4 +182,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default OfferPage;

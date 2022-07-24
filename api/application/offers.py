@@ -39,7 +39,7 @@ def addOffer():
 def getOffer(offer_id):
     offer = Offer.query.filter_by(id=offer_id).first()
     if offer:
-        creator = User.query.filter_by(id=offer.user_id).first()
+        seller = User.query.filter_by(id=offer.user_id).first()
         return (
             jsonify(
                 {
@@ -52,11 +52,12 @@ def getOffer(offer_id):
                         "price": offer.price,
                         "condition": offer.condition,
                         "date": offer.date,
-                        "creator": {
-                            "first_name": creator.first_name,
-                            "last_name": creator.last_name,
-                            "email": creator.email,
-                            "join_date": creator.join_date,
+                        "seller": {
+                            "id": seller.id,
+                            "first_name": seller.first_name,
+                            "last_name": seller.last_name,
+                            "email": seller.email,
+                            "join_date": seller.join_date,
                         },
                     },
                 }
@@ -89,7 +90,7 @@ def getLatestOffers(max_offer_count: int):
         if offer_count > int(max_offer_count):
             break
 
-        creator = User.query.filter_by(id=offer.user_id).first()
+        seller = User.query.filter_by(id=offer.user_id).first()
         offersDict = {
             "id": offer.id,
             "title": offer.title,
@@ -98,9 +99,9 @@ def getLatestOffers(max_offer_count: int):
             "condition": offer.condition,
             "category": offer.category,
             "date": offer.date,
-            "creator": {
-                "first_name": creator.first_name,
-                "last_name": creator.last_name,
+            "seller": {
+                "first_name": seller.first_name,
+                "last_name": seller.last_name,
             },
         }
         response.append(offersDict)

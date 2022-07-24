@@ -4,3 +4,4 @@ notes
 .vscode/
 database/*
 build/
+.pytest_cache/

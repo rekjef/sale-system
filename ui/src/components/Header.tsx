@@ -5,8 +5,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import CheckroomIcon from '@mui/icons-material/Checkroom';
 import AddIcon from '@mui/icons-material/Add';
-import LogoutIcon from '@mui/icons-material/Logout';
-import { grey } from '@mui/material/colors';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LoginIcon from '@mui/icons-material/Login';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
