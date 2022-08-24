@@ -15,7 +15,7 @@ function Home() {
 
   useEffect(() => {
     (async () => {
-      const response = await axios.get('/get-latest-offers/');
+      const response = await axios.get('/offer/latest/');
       setLatestOffers(response.data.offers);
     })();
   }, []);
@@ -23,7 +23,11 @@ function Home() {
   return (
     <Box>
       <Box sx={{
-        width: 1, height: 400, backgroundImage: `url(${frontPageImage})`, backgroundSize: 'cover',
+        width: 1,
+        height: 400,
+        backgroundImage: `url(${frontPageImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: '0% 30%',
       }}
       >
         <Container sx={{ height: 1 }}>
@@ -63,22 +67,22 @@ function Home() {
         </Typography>
         <Divider />
         <Grid container spacing={2} sx={{ mt: 1 }}>
-          {latestOffers.map((_offer: OfferWithSellerType) => (
-            <Grid key={_offer.id} item xs={12} md={4}>
+          {latestOffers.map((data: OfferWithSellerType) => (
+            <Grid key={data.details.id} item xs={12} md={4}>
               <OfferCard
-                data={{
-                  id: _offer.id,
-                  title: _offer.title,
-                  image: _offer.image,
-                  price: _offer.price,
-                  condition: _offer.condition,
-                  category: _offer.category,
-                  date: _offer.date,
+                details={{
+                  id: data.details.id,
+                  title: data.details.title,
+                  image: data.details.image,
+                  price: data.details.price,
+                  condition: data.details.condition,
+                  category: data.details.category,
+                  date: data.details.date,
                 }}
                 seller={{
-                  email: _offer.seller.email,
-                  first_name: _offer.seller.first_name,
-                  last_name: _offer.seller.last_name,
+                  email: data.seller.email,
+                  first_name: data.seller.first_name,
+                  last_name: data.seller.last_name,
                 }}
               />
             </Grid>

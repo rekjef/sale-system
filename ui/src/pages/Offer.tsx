@@ -10,14 +10,16 @@ import MessageIcon from '@mui/icons-material/Message';
 import noOfferImage from '../assets/images/no-offer-image.png';
 
 type offerType = {
-  id: number,
-  title: string,
-  description: string,
-  image: string,
-  category: string,
-  price: number,
-  condition: string,
-  date: string,
+  details: {
+    id: number,
+    title: string,
+    description: string,
+    image: string,
+    category: string,
+    price: number,
+    condition: string,
+    date: string,
+  },
   seller: {
     id: number,
     first_name: string,
@@ -28,14 +30,16 @@ type offerType = {
 };
 
 const blankOffer = {
-  id: -1,
-  title: '',
-  description: '',
-  image: '',
-  category: '',
-  price: -1,
-  condition: '',
-  date: '',
+  details: {
+    id: -1,
+    title: '',
+    description: '',
+    image: '',
+    category: '',
+    price: -1,
+    condition: '',
+    date: '',
+  },
   seller: {
     id: -1,
     first_name: '',
@@ -47,11 +51,11 @@ const blankOffer = {
 
 function OfferPage() {
   const { offerID } = useParams();
-  const [offer, setOffer] = useState<offerType>(blankOffer);
+  const [data, setData] = useState<offerType>(blankOffer);
   useEffect(() => {
     (async () => {
-      const response = await axios.get(`/get-offer/${offerID}`);
-      setOffer(response.data.offer);
+      const response = await axios.get(`/offer/get/${offerID}`);
+      setData(response.data);
     })();
   }, []);
 
@@ -73,7 +77,7 @@ function OfferPage() {
               bgcolor: 'themeWhite.main', borderRadius: 2, boxShadow: 2, width: 1,
             }}
           >
-            <Grid item component="img" alt="No offer's image" src={offer.image === '' ? noOfferImage : offer.image} sx={{ height: 233, mx: 'auto' }} />
+            <Grid item component="img" alt="No offer's image" src={data.details.image === '' ? noOfferImage : data.details.image} sx={{ height: 233, mx: 'auto' }} />
           </Grid>
         </Grid>
 
@@ -92,17 +96,17 @@ function OfferPage() {
                   <AccountCircleIcon />
                 </Avatar>
                 <Box sx={{ ml: 2 }}>
-                  <Link to={`/profile/${offer.seller.id}`} style={{ textDecoration: 'none' }}>
+                  <Link to={`/profile/${data.seller.id}`} style={{ textDecoration: 'none' }}>
                     <Typography variant="body2" color="text.primary">
-                      {offer.seller.first_name}
+                      {data.seller.first_name}
                       {' '}
-                      {offer.seller.last_name}
+                      {data.seller.last_name}
                     </Typography>
                   </Link>
                   <Typography color="text.secondary" variant="body2">
                     Joined in
                     {' '}
-                    {offer.seller.join_date.split(' ')[3]}
+                    {data.seller.join_date.split(' ')[3]}
                   </Typography>
                 </Box>
               </Grid>
@@ -122,7 +126,7 @@ function OfferPage() {
             }}
             >
               <Box sx={{ mb: 1 }}>
-                {offer.title}
+                {data.details.title}
               </Box>
 
               <Divider />
@@ -131,19 +135,19 @@ function OfferPage() {
                 <Typography color="text.secondary" variant="body2">
                   Condition:
                   {' '}
-                  {offer.condition ? 'New' : 'Used'}
+                  {data.details.condition ? 'New' : 'Used'}
                 </Typography>
 
                 <Typography color="text.secondary" variant="body2">
                   Category:
                   {' '}
-                  {offer.category}
+                  {data.details.category}
                 </Typography>
 
                 <Typography color="text.secondary" variant="body2">
                   Price:
                   {' '}
-                  {offer.price}
+                  {data.details.price}
                   $
                 </Typography>
               </Box>
@@ -173,7 +177,7 @@ function OfferPage() {
             <Divider />
 
             <Typography sx={{ mt: 1 }}>
-              {offer.description}
+              {data.details.description}
             </Typography>
           </Box>
         </Grid>

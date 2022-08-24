@@ -34,7 +34,7 @@ function AddOffer() {
       condition,
       user_id: user.id,
     };
-    axios.post('add-offer', data).then((response) => {
+    axios.post('/offer/add', data).then((response) => {
       notification(response.data.notification.message, response.data.notification.category);
       if (response.data.notification.category === 'success') {
         navigate(`/offer/${response.data.offer_id}`);

@@ -1,18 +1,20 @@
 import {
-  Button, Card, CardActions, CardContent, CardMedia, Grid, Typography, Divider,
+  Button, Card, CardActions, CardContent, CardMedia, Divider, Grid, Typography,
 } from '@mui/material';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import noOfferImage from '../assets/images/no-offer-image.png';
 
 export type OfferWithSellerType = {
-  'id': number,
-  'title': string,
-  'image': string,
-  'price': number,
-  'condition': boolean,
-  'category': string,
-  'date': string,
+  'details': {
+    'id': number,
+    'title': string,
+    'image': string,
+    'price': number,
+    'condition': boolean,
+    'category': string,
+    'date': string,
+  },
   'seller': {
     'email': string,
     'first_name': string,
@@ -21,7 +23,7 @@ export type OfferWithSellerType = {
 };
 
 export type OfferCardProps = {
-  data: {
+  details: {
     'id': number,
     'title': string,
     'image': string,
@@ -37,14 +39,14 @@ export type OfferCardProps = {
   },
 }
 
-function OfferCard({ data, seller }: OfferCardProps) {
+function OfferCard({ details, seller }: OfferCardProps) {
   const navigate = useNavigate();
   return (
     <Card sx={{ width: 1, boxShadow: 3, borderRadius: 2 }}>
       <CardMedia
         component="img"
         sx={{ width: 'auto', height: 180, mx: 'auto' }}
-        image={data.image === '' ? noOfferImage : data.image}
+        image={details.image === '' ? noOfferImage : details.image}
         alt="Offer's image"
       />
 
@@ -54,14 +56,14 @@ function OfferCard({ data, seller }: OfferCardProps) {
         <Grid container>
           <Grid item minHeight={71} xs md>
             <Typography gutterBottom variant="h6" component="div">
-              {data.title}
+              {details.title}
             </Typography>
           </Grid>
           <Grid item xs md>
             <Typography color="text.secondary" sx={{ textAlign: 'right' }}>
               Posted
               {' '}
-              {data.date.split(' ').slice(1, 4).join(' ')}
+              {details.date.split(' ').slice(1, 4).join(' ')}
             </Typography>
           </Grid>
         </Grid>
@@ -71,7 +73,7 @@ function OfferCard({ data, seller }: OfferCardProps) {
             <Typography variant="body2" color="text.secondary">
               Price:
               {' '}
-              {data.price}
+              {details.price}
               $
             </Typography>
           </Grid>
@@ -79,14 +81,14 @@ function OfferCard({ data, seller }: OfferCardProps) {
             <Typography variant="body2" color="text.secondary" textAlign="right">
               Category:
               {' '}
-              {data.category}
+              {details.category}
             </Typography>
           </Grid>
           <Grid item xs={6} md={6}>
             <Typography variant="body2" color="text.secondary">
               Condition:
               {' '}
-              {data.condition ? 'New' : 'Used'}
+              {details.condition ? 'New' : 'Used'}
             </Typography>
           </Grid>
           <Grid item xs={6} md={6}>
@@ -102,7 +104,7 @@ function OfferCard({ data, seller }: OfferCardProps) {
       </CardContent>
 
       <CardActions>
-        <Button onClick={() => navigate(`/offer/${data.id}`)} sx={{ width: 1 }} variant="contained" color="secondary">Check it out</Button>
+        <Button onClick={() => navigate(`/offer/${details.id}`)} sx={{ width: 1 }} variant="contained" color="secondary">Check it out</Button>
       </CardActions>
     </Card>
   );

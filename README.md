@@ -12,7 +12,7 @@ Inspired by [vinted.pl](https://www.vinted.com)
 
 **Database:** PostgreSQL, Redis
 
-**Other**: Docker
+**Other**: Docker, Swagger
 
 ## Installation
 
@@ -35,6 +35,10 @@ Close the app by typing
 ```bash
   docker-compose down
 ```
+
+## Swagger api docs
+
+To see swagger api documentation, run docker and go to localhost/
 
 ## Environment Variables
 

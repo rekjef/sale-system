@@ -25,7 +25,7 @@ function SignUp() {
       email: formData.get('email'),
       password: formData.get('password'),
     };
-    axios.post('/signup', {
+    axios.post('/user/sign-up', {
       first_name: data.first_name,
       last_name: data.last_name,
       email: data.email,

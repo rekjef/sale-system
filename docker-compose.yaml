@@ -51,6 +51,17 @@ services:
             - flask
         volumes:
             - ./ui:/app
+    
+    swagger:
+        image: swaggerapi/swagger-ui
+        restart: always
+        volumes:
+            - ./doc:/usr/share/nginx/html/doc
+        environment:
+            API_URL: doc/swagger.yaml
+        ports:
+            - 80:8080
+
 
 volumes:
     postgres:

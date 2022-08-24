@@ -7,25 +7,25 @@ import './App.css';
 
 import { Button, ThemeProvider } from '@mui/material';
 import axios from 'axios';
-import SignUp from './Pages/SignUp';
-import SignIn from './Pages/SignIn';
-import Home from './Pages/Home';
+import SignUp from './pages/SignUp';
+import SignIn from './pages/SignIn';
+import Home from './pages/Home';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
-import ErrorPage from './Pages/ErrorPage';
-import AddOffer from './Pages/AddOffer';
+import ErrorPage from './pages/ErrorPage';
+import AddOffer from './pages/AddOffer';
 import { UserContext, User, NullUser } from './UserContext';
-import Offer from './Pages/Offer';
+import Offer from './pages/Offer';
 import theme from './Theme';
-import Profile from './Pages/Profile';
+import Profile from './pages/Profile';
 
 function App() {
   const [user, setUser] = useState<User>(NullUser);
 
   useEffect(() => {
     (async () => {
-      const response = await axios.get('/currentuser');
+      const response = await axios.get('/user/current');
       setUser(response.data);
     })();
   }, [user?.isLogged]);

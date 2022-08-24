@@ -1,13 +1,14 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {
   Avatar, Box, Button, Container, CssBaseline, Grid, TextField, Typography,
 } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useSnackbar, VariantType } from 'notistack';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useGlobalContext } from '../UserContext';
+import { responseNotificationType } from '../globalTypes';
 
 function SignIn() {
   const { setUser } = useGlobalContext();
@@ -28,7 +29,7 @@ function SignIn() {
       password: formData.get('password'),
     };
 
-    axios.post('/signin', {
+    axios.post('/user/sign-in', {
       email: data.email,
       password: data.password,
     }).then((response) => {
@@ -39,6 +40,11 @@ function SignIn() {
         isLogged: true,
       });
       navigate('/');
+    }).catch((err: AxiosError) => {
+      if (err.response) {
+        const n = err.response.data as responseNotificationType;
+        notification(n.notification.message, n.notification.category);
+      }
     });
   };
 

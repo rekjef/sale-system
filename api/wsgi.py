@@ -1,10 +1,10 @@
-from application import create_app, update_database_tables
+from application import create_app, reset_database_tables
 
 app = create_app()
 
 
 def update_db():
-    update_database_tables(app)
+    reset_database_tables(app)
 
 
 if __name__ == "__main__":

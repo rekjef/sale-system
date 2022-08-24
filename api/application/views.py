@@ -1,11 +1,13 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint
 from .models import User
+from . import ApiResponse
 
 views = Blueprint("views", __name__)
 
 
-@views.route("/profile/<userID>")
-def profile(userID: int):
+# returns user info/offers by userID
+@views.route("/user/<userID>", methods=["GET"])
+def user(userID: int):
     user = User.query.filter_by(id=userID).first()
     if user:
         user_data = {
@@ -28,6 +30,8 @@ def profile(userID: int):
                     "date": offer.date,
                 }
             )
-        return jsonify({"user": user_data, "offers": user_offers}), "200"
 
-    return "400"
+        response_data = {"user": user_data, "offers": user_offers}
+        return ApiResponse(data=response_data, code=200)
+
+    return ApiResponse(code=400)

@@ -33,7 +33,7 @@ function Header() {
   };
 
   const signOut = async () => {
-    const response = await axios.post('/signout');
+    const response = await axios.get('/user/sign-out');
     setUser(NullUser);
     notification(response.data.notification.message, response.data.notification.category);
     navigate('/');

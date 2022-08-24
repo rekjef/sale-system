@@ -19,11 +19,11 @@ function Profile() {
   const [profile, setProfile] = useState<profileType>({
     first_name: '', last_name: '', email: '', join_date: '',
   });
-  const [offers, setOffers] = useState<OfferCardProps['data'][]>([]);
+  const [offers, setOffers] = useState<OfferCardProps['details'][]>([]);
 
   useEffect(() => {
     (async () => {
-      const response = await axios.get(`/profile/${userID}`);
+      const response = await axios.get(`/user/${userID}`);
       setProfile(response.data.user);
       setOffers(response.data.offers);
     })();
@@ -68,10 +68,10 @@ function Profile() {
               <Divider />
 
               <Grid container sx={{ mt: 1 }} spacing={2}>
-                {offers.map((_offer: OfferCardProps['data']) => (
-                  <Grid item key={_offer.id} xs={12} md={4}>
+                {offers.map((_details: OfferCardProps['details']) => (
+                  <Grid item key={_details.id} xs={12} md={4}>
                     <OfferCard
-                      data={_offer}
+                      details={_details}
                       seller={{
                         email: profile.email,
                         first_name: profile.first_name,

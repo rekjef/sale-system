@@ -1,0 +1,334 @@
+swagger: "2.0"
+info:
+  version: "1.0"
+  title: "SaleSystem"
+
+  description: "This is SaleSystem's api documentation.\n Find out more at [https://github.com/rekjef/sale-system](https://github.com/rekjef/sale-system)."
+
+host: "localhost:3000"
+
+tags:
+  - name: "user"
+    description: "Operations about user"
+  - name: "offer"
+    description: "Handling offers requests"
+
+paths:
+  /user/sign-up:
+    post:
+      tags:
+        - "user"
+      summary: "Create user"
+      description: "This can only be done when creating a new user."
+      operationId: "createUser"
+      produces:
+        - "application/json"
+      parameters:
+        - in: body
+          name: user
+          description: New user data
+          schema:
+            type: object
+            required:
+              - first_name
+              - last_name
+              - email
+              - password
+            properties:
+              first_name:
+                type: string
+              last_name:
+                type: string
+              email:
+                type: string
+              password:
+                type: string
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            properties:
+              id:
+                type: string
+              email:
+                type: string
+
+  /user/sign-in:
+    post:
+      tags:
+        - "user"
+      summary: "Logs user into the system"
+      description: ""
+      operationId: "loginUser"
+      produces:
+        - "application/json"
+      parameters:
+        - in: body
+          name: user
+          description: Data required to sign in
+          schema:
+            type: object
+            required:
+              - email
+              - password
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            properties:
+              id:
+                type: string
+              email:
+                type: string
+        "401":
+          description: "Invalid username/password supplied"
+
+  /user/sign-out:
+    get:
+      tags:
+        - "user"
+      summary: "Logs out current logged in user session"
+      responses:
+        "200":
+          description: "successful operation"
+
+  /user/{userID}:
+    get:
+      tags:
+        - "user"
+      summary: "Get user data by user_id"
+      parameters:
+        - name: "userID"
+          in: "path"
+          description: "Searched user's id"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: object
+            properties:
+              user:
+                type: object
+                properties:
+                  first_name:
+                    type: string
+                  last_name:
+                    type: string
+                  email:
+                    type: string
+                  join_date:
+                    type: "string"
+                    format: "date-time"
+              offers:
+                type: array
+                items:
+                  $ref: "#/definitions/User"
+        "400":
+          description: "User not found"
+  /user/current:
+    get:
+      tags:
+        - "user"
+      summary: "Returns logged user data"
+      responses:
+        default:
+          description: "successful operation"
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+              email:
+                type: string
+              isLogged:
+                type: boolean
+  /offer/add:
+    post:
+      summary: Adds new offer
+      tags:
+        - "offer"
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: offer
+          description: New offer
+          schema:
+            type: object
+            required:
+              - title
+              - description
+              - category
+              - price
+              - condition
+            properties:
+              title:
+                type: string
+              description:
+                type: string
+              image:
+                type: string
+              category:
+                type: string
+              price:
+                type: number
+              condition:
+                type: string
+      responses:
+        "200":
+          description: Created
+  /offer/get/{offer_id}:
+    get:
+      tags:
+        - "offer"
+      summary: "Returns offer by id"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "offer_id"
+          type: "integer"
+          required: true
+      responses:
+        "200":
+          schema:
+            type: object
+            properties:
+              details:
+                $ref: "#/definitions/User"
+              seller:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  first_name:
+                    type: "string"
+                  last_name:
+                    type: "string"
+                  email:
+                    type: "string"
+                  password:
+                    type: "string"
+                  join_date:
+                    type: "string"
+                    format: "date-time"
+
+          description: "successful operation"
+
+  /offer/latest/{max_offer_count}:
+    get:
+      tags:
+        - "offer"
+      summary: "Returns latest n offers"
+      parameters:
+        - in: "path"
+          name: "max_offer_count"
+          type: "integer"
+          required: true
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: object
+            properties:
+              offers:
+                type: array
+                items:
+                  properties:
+                    details:
+                      $ref: "#/definitions/Offer"
+                    seller:
+                      type: object
+                      properties:
+                        first_name:
+                          type: string
+                        last_name:
+                          type: string
+
+definitions:
+  Offer:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      title:
+        type: "string"
+      description:
+        type: "string"
+      image:
+        type: "string"
+        description: "Image url"
+      category:
+        type: "string"
+        enum:
+          - "Women"
+          - "Men"
+          - "Kids"
+          - "Home"
+      price:
+        type: "number"
+        format: "float"
+      condition:
+        type: "string"
+        enum:
+          - "New"
+          - "Used"
+      date:
+        type: "string"
+        format: "date-time"
+      user_id:
+        type: "integer"
+        format: "ForeignKey('users.id')"
+    xml:
+      name: "Offer"
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      first_name:
+        type: "string"
+      last_name:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+      join_date:
+        type: "string"
+        format: "date-time"
+      offers:
+        type: "object"
+        format: "Relationship(Offer)"
+    xml:
+      name: "User"
+  ApiResponse:
+    type: "object"
+    properties:
+      response:
+        type: "object"
+        properties:
+          someData:
+            type: object
+          notification:
+            type: "object"
+            properties:
+              message:
+                type: "string"
+              category:
+                type: "string"
+                enum:
+                  - "default"
+                  - "success"
+                  - "error"
+                  - "warning"
+                  - "info"
+      code:
+        type: "string"
