@@ -1,12 +1,17 @@
 import {
-  Box, Button, Container, Grid, Typography, Divider,
-} from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { useGlobalContext } from '../UserContext';
-import frontPageImage from '../assets/images/front_page.jpg';
-import OfferCard, { OfferWithSellerType } from '../components/OfferCard';
+  Box,
+  Button,
+  Container,
+  Divider,
+  Grid,
+  Typography,
+} from "@mui/material";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import frontPageImage from "../assets/images/front_page.jpg";
+import OfferCard, { OfferWithSellerType } from "../components/OfferCard";
+import { useGlobalContext } from "../UserContext";
 
 function Home() {
   const { user } = useGlobalContext();
@@ -15,45 +20,64 @@ function Home() {
 
   useEffect(() => {
     (async () => {
-      const response = await axios.get('/offer/latest/');
+      const response = await axios.get("api/offer/latest/");
       setLatestOffers(response.data.offers);
     })();
   }, []);
 
   return (
     <Box>
-      <Box sx={{
-        width: 1,
-        height: 400,
-        backgroundImage: `url(${frontPageImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: '0% 30%',
-      }}
+      <Box
+        sx={{
+          width: 1,
+          height: 400,
+          backgroundImage: `url(${frontPageImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "0% 30%",
+        }}
       >
         <Container sx={{ height: 1 }}>
           <Grid container alignItems="center" sx={{ height: 1 }}>
             <Grid item md={4} xs>
-              <Box sx={{
-                width: 1, boxShadow: 2, borderRadius: 2, bgcolor: 'themeWhite.main',
-              }}
+              <Box
+                sx={{
+                  width: 1,
+                  boxShadow: 2,
+                  borderRadius: 2,
+                  bgcolor: "themeWhite.main",
+                }}
               >
                 <Box sx={{ p: 2 }}>
                   <Typography variant="h6" sx={{ mb: 1 }}>
                     Want to sell your stuff?
                   </Typography>
                   {user.isLogged ? (
-                    <Button onClick={() => navigate('/add-offer')} sx={{ mt: 1, width: 1 }} variant="contained">Add offer</Button>
+                    <Button
+                      onClick={() => navigate("/add-offer")}
+                      sx={{ mt: 1, width: 1 }}
+                      variant="contained"
+                    >
+                      Add offer
+                    </Button>
                   ) : (
                     <>
-                      <Button onClick={() => navigate('/signup')} variant="outlined" sx={{ mt: 1, width: 1 }}>
+                      <Button
+                        onClick={() => navigate("/signup")}
+                        variant="outlined"
+                        sx={{ mt: 1, width: 1 }}
+                      >
                         Sign up
                       </Button>
-                      <Button onClick={() => navigate('/signin')} variant="contained" color="secondary" sx={{ mt: 1, width: 1 }}>
+                      <Button
+                        onClick={() => navigate("/signin")}
+                        variant="contained"
+                        color="secondary"
+                        sx={{ mt: 1, width: 1 }}
+                      >
                         Sign in
                       </Button>
                     </>
                   )}
-
                 </Box>
               </Box>
             </Grid>
@@ -87,7 +111,6 @@ function Home() {
               />
             </Grid>
           ))}
-
         </Grid>
       </Container>
     </Box>

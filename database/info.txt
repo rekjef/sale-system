@@ -1,2 +1,0 @@
-Database tables are built from ../api/models.py
-It's used to create new one's in initial run

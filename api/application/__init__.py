@@ -10,6 +10,7 @@ sess = Session()
 def create_app():
     app = Flask(__name__, instance_relative_config=False)
     app.config.from_object("config.Config")
+    app.config["FLASK_DEBUG"] = 1
 
     db.init_app(app)
     sess.init_app(app)
@@ -23,7 +24,7 @@ def create_app():
         app.register_blueprint(auth)
         app.register_blueprint(offers)
 
-        db.create_all(app=app)
+        db.create_all()
 
         return app
 
@@ -36,5 +37,6 @@ def ApiResponse(code: int, data={}, notification={}) -> dict:
 
 # wipes db, adds new instance
 def reset_database_tables(app):
-    db.drop_all()
-    db.create_all(app=app)
+    with app.app_context():
+        db.drop_all()
+        db.create_all()

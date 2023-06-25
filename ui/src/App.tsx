@@ -1,31 +1,31 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 /* eslint-disable react/no-unstable-nested-components */
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { SnackbarProvider, useSnackbar } from 'notistack';
-import './App.css';
+import { SnackbarProvider, useSnackbar } from "notistack";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import "./App.css";
 
-import { Button, ThemeProvider } from '@mui/material';
-import axios from 'axios';
-import SignUp from './pages/SignUp';
-import SignIn from './pages/SignIn';
-import Home from './pages/Home';
+import { Button, ThemeProvider } from "@mui/material";
+import axios from "axios";
+import Home from "./pages/Home";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 
-import Header from './components/Header';
-import Footer from './components/Footer';
-import ErrorPage from './pages/ErrorPage';
-import AddOffer from './pages/AddOffer';
-import { UserContext, User, NullUser } from './UserContext';
-import Offer from './pages/Offer';
-import theme from './Theme';
-import Profile from './pages/Profile';
-
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import AddOffer from "./pages/AddOffer";
+import ErrorPage from "./pages/ErrorPage";
+import Offer from "./pages/Offer";
+import Profile from "./pages/Profile";
+import theme from "./Theme";
+import { NullUser, User, UserContext } from "./UserContext";
+// axios.defaults.baseURL = `http://localhost:5000`;
 function App() {
   const [user, setUser] = useState<User>(NullUser);
 
   useEffect(() => {
     (async () => {
-      const response = await axios.get('/user/current');
+      const response = await axios.get("api/user/current");
       setUser(response.data);
     })();
   }, [user?.isLogged]);
@@ -34,7 +34,12 @@ function App() {
   function CloseSnackbarAction({ id }: any) {
     const { closeSnackbar } = useSnackbar();
     return (
-      <Button sx={{ color: 'white' }} onClick={() => { closeSnackbar(id); }}>
+      <Button
+        sx={{ color: "white" }}
+        onClick={() => {
+          closeSnackbar(id);
+        }}
+      >
         Dismiss
       </Button>
     );

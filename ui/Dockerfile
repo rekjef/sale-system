@@ -1,11 +1,20 @@
-FROM node:18
+# Base image
+FROM node:14-alpine
 
+# Set working directory
 WORKDIR /app
 
-COPY ./package.json ./package-lock.json ./
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
-#RUN npm ci
+# Install dependencies
+RUN npm install
 
+# Copy project files
 COPY . .
 
-CMD ["npm", "start", "dev:watch"]
+# Build the project
+# RUN npm run build
+
+# Start the app
+CMD ["npm", "run", "dev"]

@@ -1,12 +1,20 @@
-import React from 'react';
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import {
-  Avatar, Box, Button, Container, CssBaseline, Grid, Link, TextField, Typography,
-} from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import axios from 'axios';
-import { useSnackbar, VariantType } from 'notistack';
-import { useNavigate } from 'react-router-dom';
-import { useGlobalContext } from '../UserContext';
+  Avatar,
+  Box,
+  Button,
+  Container,
+  CssBaseline,
+  Grid,
+  Link,
+  TextField,
+  Typography,
+} from "@mui/material";
+import axios from "axios";
+import { useSnackbar, VariantType } from "notistack";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useGlobalContext } from "../UserContext";
 
 function SignUp() {
   const { setUser } = useGlobalContext();
@@ -20,25 +28,30 @@ function SignUp() {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const data = {
-      first_name: formData.get('first_name'),
-      last_name: formData.get('last_name'),
-      email: formData.get('email'),
-      password: formData.get('password'),
+      first_name: formData.get("first_name"),
+      last_name: formData.get("last_name"),
+      email: formData.get("email"),
+      password: formData.get("password"),
     };
-    axios.post('/user/sign-up', {
-      first_name: data.first_name,
-      last_name: data.last_name,
-      email: data.email,
-      password: data.password,
-    }).then((response) => {
-      notification(response.data.notification.message, response.data.notification.category);
-      setUser({
-        id: response.data.id,
-        email: response.data.email,
-        isLogged: true,
+    axios
+      .post("api/user/sign-up", {
+        first_name: data.first_name,
+        last_name: data.last_name,
+        email: data.email,
+        password: data.password,
+      })
+      .then((response) => {
+        notification(
+          response.data.notification.message,
+          response.data.notification.category
+        );
+        setUser({
+          id: response.data.id,
+          email: response.data.email,
+          isLogged: true,
+        });
+        navigate("/");
       });
-      navigate('/');
-    });
   };
 
   return (
@@ -47,18 +60,24 @@ function SignUp() {
       <Box
         sx={{
           marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <Box component="form" method="POST" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
+        <Box
+          component="form"
+          method="POST"
+          onSubmit={handleSubmit}
+          noValidate
+          sx={{ mt: 3 }}
+        >
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField

@@ -1,68 +1,71 @@
-version: '3.9'
+version: "3.9"
 services:
-   
-    postgres:
-        image: postgres
-        restart: always
-        volumes:
-            - ./database:/var/lib/postgresql/data
-        environment:
-            POSTGRES_USER: rekjef
-            POSTGRES_PASSWORD: rekjef
-            POSTGRES_DB: db
-        ports:
-            - 5432:5432
+  postgres:
+    container_name: postgres
+    image: postgres
+    restart: always
+    volumes:
+      - ./database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: rekjef
+      POSTGRES_PASSWORD: rekjef
+      POSTGRES_DB: db
+    ports:
+      - 5432:5432
 
-    redis:
-        image: redis
-        restart: always
-        ports:
-            - 6379:6379
+  redis:
+    container_name: redis
+    image: redis
+    restart: always
+    ports:
+      - 6379:6379
 
-    flask:
-        restart:
-            always
-        build:
-            context: ./api
-            dockerfile: ./Dockerfile
-        image: sale-system-api
-        depends_on:
-            - postgres
-            - redis
-        environment:
-            FLASK_APP: wsgi.py
-            FLASK_ENV: development
-            PYTHONUNBUFFERED: 1
-        links:
-            - "postgres:db"
-        ports:
-            - 5000:5000
-        volumes:
-            - ./api:/app
+  flask:
+    container_name: flask
+    restart: always
+    build:
+      context: ./api
+      dockerfile: ./Dockerfile
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      FLASK_APP: wsgi.py
+      FLASK_DEBUG: 1
+      PYTHONUNBUFFERED: 1
+    links:
+      - "postgres:db"
+    ports:
+      - 5000:5000
+    volumes:
+      - ./api:/app
 
-    react:
-        build:
-            context: ./ui
-            dockerfile: ./Dockerfile
-        image: sale-system-ui
-        ports:
-            - 3000:3000
-        depends_on:
-            - flask
-        volumes:
-            - ./ui:/app
-    
-    swagger:
-        image: swaggerapi/swagger-ui
-        restart: always
-        volumes:
-            - ./doc:/usr/share/nginx/html/doc
-        environment:
-            API_URL: doc/swagger.yaml
-        ports:
-            - 80:8080
+  vite-react:
+    container_name: vite-react
+    build:
+      context: ./ui
+      dockerfile: ./Dockerfile
+    ports:
+      - 8000:8000
+    depends_on:
+      - flask
+    links:
+      - flask
+    volumes:
+      - ./ui:/app
+      - /app/node_modules
 
+  swagger:
+    container_name: swagger
+    image: swaggerapi/swagger-ui
+    restart: always
+    volumes:
+      - ./doc:/usr/share/nginx/html/doc
+    environment:
+      API_URL: doc/swagger.yaml
+    ports:
+      - 80:8080
 
 volumes:
-    postgres:
-        driver: local
+  postgres:
+    driver: local

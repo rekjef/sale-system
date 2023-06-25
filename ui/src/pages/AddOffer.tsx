@@ -1,17 +1,29 @@
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import {
-  Avatar, Box, Button, Container, CssBaseline, FormControl, Grid, InputAdornment, InputLabel,
-  MenuItem, Select, SelectChangeEvent, TextField, Typography,
-} from '@mui/material';
-import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { useSnackbar, VariantType } from 'notistack';
-import { useGlobalContext } from '../UserContext';
+  Avatar,
+  Box,
+  Button,
+  Container,
+  CssBaseline,
+  FormControl,
+  Grid,
+  InputAdornment,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  TextField,
+  Typography,
+} from "@mui/material";
+import axios from "axios";
+import { useSnackbar, VariantType } from "notistack";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useGlobalContext } from "../UserContext";
 
 function AddOffer() {
-  const [condition, setCondition] = useState('');
-  const [category, setCategory] = useState('');
+  const [condition, setCondition] = useState("");
+  const [category, setCategory] = useState("");
 
   const { user } = useGlobalContext();
   const { enqueueSnackbar } = useSnackbar();
@@ -26,17 +38,20 @@ function AddOffer() {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const data = {
-      title: formData.get('title'),
-      description: formData.get('description'),
-      image: formData.get('image'),
+      title: formData.get("title"),
+      description: formData.get("description"),
+      image: formData.get("image"),
       category,
-      price: formData.get('price'),
+      price: formData.get("price"),
       condition,
       user_id: user.id,
     };
-    axios.post('/offer/add', data).then((response) => {
-      notification(response.data.notification.message, response.data.notification.category);
-      if (response.data.notification.category === 'success') {
+    axios.post("api/offer/add", data).then((response) => {
+      notification(
+        response.data.notification.message,
+        response.data.notification.category
+      );
+      if (response.data.notification.category === "success") {
         navigate(`/offer/${response.data.offer_id}`);
       }
     });
@@ -48,28 +63,29 @@ function AddOffer() {
       <Box
         sx={{
           marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
         <Grid alignItems="center" justifyContent="center" container>
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LocalOfferIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Add offer
           </Typography>
         </Grid>
-        <Box component="form" method="POST" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
+        <Box
+          component="form"
+          method="POST"
+          onSubmit={handleSubmit}
+          noValidate
+          sx={{ mt: 3 }}
+        >
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TextField
-                fullWidth
-                name="title"
-                label="Title"
-                autoFocus
-              />
+              <TextField fullWidth name="title" label="Title" autoFocus />
             </Grid>
 
             <Grid item xs={12}>
@@ -84,11 +100,7 @@ function AddOffer() {
             </Grid>
 
             <Grid item xs={12}>
-              <TextField
-                name="image"
-                label="Image"
-                fullWidth
-              />
+              <TextField name="image" label="Image" fullWidth />
             </Grid>
 
             <Grid item xs={12} md={6}>
@@ -97,7 +109,9 @@ function AddOffer() {
                 <Select
                   value={condition}
                   label="Condition"
-                  onChange={(event: SelectChangeEvent) => setCondition(event.target.value)}
+                  onChange={(event: SelectChangeEvent) =>
+                    setCondition(event.target.value)
+                  }
                 >
                   <MenuItem value="new">New</MenuItem>
                   <MenuItem value="used">Used</MenuItem>
@@ -111,7 +125,9 @@ function AddOffer() {
                 <Select
                   value={category}
                   label="Category"
-                  onChange={(event: SelectChangeEvent) => setCategory(event.target.value)}
+                  onChange={(event: SelectChangeEvent) =>
+                    setCategory(event.target.value)
+                  }
                 >
                   <MenuItem value="Women">Women</MenuItem>
                   <MenuItem value="Men">Men</MenuItem>
@@ -127,7 +143,9 @@ function AddOffer() {
                 label="Price"
                 required
                 InputProps={{
-                  startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                  startAdornment: (
+                    <InputAdornment position="start">$</InputAdornment>
+                  ),
                 }}
                 fullWidth
               />
