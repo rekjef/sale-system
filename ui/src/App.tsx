@@ -1,7 +1,5 @@
-/* eslint-disable react/jsx-no-constructed-context-values */
-/* eslint-disable react/no-unstable-nested-components */
 import { SnackbarProvider, useSnackbar } from "notistack";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 
@@ -50,7 +48,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <SnackbarProvider
           maxSnack={3}
-          action={(key) => <CloseSnackbarAction id={key} />}
+          action={(key: any) => <CloseSnackbarAction id={key} />}
         >
           <Router>
             <Header />

@@ -1,7 +1,6 @@
-import { createTheme, PaletteColorOptions } from '@mui/material';
-import { amber, blue } from '@mui/material/colors';
+import { createTheme, PaletteColorOptions } from "@mui/material";
 
-declare module '@mui/material/styles' {
+declare module "@mui/material/styles" {
   interface Palette {
     themeWhite: PaletteColorOptions;
     themeBackground: PaletteColorOptions;
@@ -14,22 +13,22 @@ declare module '@mui/material/styles' {
   }
 }
 
-const primaryColor = blue[800];
-const secondaryColor = amber[700];
-
 const { palette } = createTheme();
 const theme = createTheme({
   palette: {
-    mode: 'light',
+    mode: "light",
     primary: {
-      main: primaryColor,
+      main: "#F39C12",
     },
     secondary: {
-      main: secondaryColor,
+      main: "#3a4e58",
     },
-    themeWhite: palette.augmentColor({ color: { main: '#fff' } }),
-    themeBackground: palette.augmentColor({ color: { main: '#f1f1f1' } }),
-    themeAvatarBackground: palette.augmentColor({ color: { main: '#282c34' } }),
+    info: {
+      main: "#4CAF50",
+    },
+    themeWhite: palette.augmentColor({ color: { main: "#fff" } }),
+    themeBackground: palette.augmentColor({ color: { main: "#f1f1f1" } }),
+    themeAvatarBackground: palette.augmentColor({ color: { main: "#282c34" } }),
   },
 });
 

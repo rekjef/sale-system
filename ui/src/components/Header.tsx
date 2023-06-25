@@ -16,9 +16,16 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useSnackbar, VariantType } from "notistack";
-import React from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { NullUser, useGlobalContext } from "../UserContext";
+
+const menuItems: { [key: string]: string } = {
+  offers: "/offer/1",
+  faq: "/offer/1",
+  contact: "/offer/1",
+  "about us": "/offer/1",
+};
 
 function Header() {
   const { user } = useGlobalContext();
@@ -26,7 +33,7 @@ function Header() {
 
   const { setUser } = useGlobalContext();
   const { enqueueSnackbar } = useSnackbar();
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const notification = (message: string, category?: VariantType) => {
     enqueueSnackbar(message, { variant: category });
@@ -41,7 +48,7 @@ function Header() {
   };
 
   const signOut = async () => {
-    const response = await axios.get("api/user/sign-out");
+    const response = await axios.get("/api/user/sign-out");
     setUser(NullUser);
     notification(
       response.data.notification.message,
@@ -52,7 +59,7 @@ function Header() {
 
   return (
     <AppBar position="static">
-      <Box sx={{ bgcolor: "themeBackground.main", width: 1 }}>
+      <Box sx={{ bgcolor: "themeBackground.main" }}>
         <Container maxWidth="xl" sx={{ py: 1 }}>
           <Typography
             fontWeight="bold"
@@ -64,7 +71,8 @@ function Header() {
           </Typography>
         </Container>
       </Box>
-      <Box sx={{ bgcolor: "themeWhite.main", width: 1 }}>
+
+      <Box sx={{ bgcolor: "themeWhite.main" }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Button
@@ -86,32 +94,30 @@ function Header() {
                 SaleSystem
               </Typography>
             </Button>
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              <Button
-                sx={{ color: "black" }}
-                onClick={() => navigate("/offer/1")}
-              >
-                Offers
-              </Button>
-              <Button
-                sx={{ color: "black" }}
-                onClick={() => navigate("/offer/1")}
-              >
-                FAQ
-              </Button>
-              <Button
-                sx={{ color: "black" }}
-                onClick={() => navigate("/offer/1")}
-              >
-                Contact
-              </Button>
-              <Button
-                sx={{ color: "black" }}
-                onClick={() => navigate("/offer/1")}
-              >
-                About us
-              </Button>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: "none", md: "flex" },
+                justifyContent: "center",
+              }}
+            >
+              {Object.entries(menuItems).map(([key, value]) => (
+                <Button
+                  key={key}
+                  sx={{
+                    color: "black",
+                    mx: 2,
+                    "&.MuiButton-root.Mui-active": {
+                      background: "red",
+                    },
+                  }}
+                  onClick={() => navigate(value)}
+                >
+                  {key}
+                </Button>
+              ))}
             </Box>
+
             <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
               {user.isLogged ? (
                 <div>

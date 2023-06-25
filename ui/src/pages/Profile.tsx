@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import OfferCard, { OfferCardProps } from "../components/OfferCard";
 
@@ -31,11 +31,12 @@ function Profile() {
 
   useEffect(() => {
     (async () => {
-      const response = await axios.get(`api/user/${userID}`);
+      const response = await axios.get(`/api/user/${userID}`);
+      console.log(response);
       setProfile(response.data.user);
       setOffers(response.data.offers);
     })();
-  }, []);
+  }, [userID]);
 
   return (
     <Container sx={{ mt: 4 }}>

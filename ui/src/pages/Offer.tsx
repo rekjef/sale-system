@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import noOfferImage from "../assets/images/no-offer-image.png";
 
@@ -59,10 +59,10 @@ function OfferPage() {
   const [data, setData] = useState<offerType>(blankOffer);
   useEffect(() => {
     (async () => {
-      const response = await axios.get(`api/offer/get/${offerID}`);
+      const response = await axios.get(`/api/offer/get/${offerID}`);
       setData(response.data);
     })();
-  }, []);
+  }, [offerID]);
 
   return (
     <Container sx={{ mt: 4 }}>

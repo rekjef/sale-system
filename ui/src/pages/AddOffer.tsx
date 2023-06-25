@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useSnackbar, VariantType } from "notistack";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../UserContext";
 

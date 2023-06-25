@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import frontPageImage from "../assets/images/front_page.jpg";
 import OfferCard, { OfferWithSellerType } from "../components/OfferCard";
