@@ -23,7 +23,7 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      const response = await axios.get("api/user/current");
+      const response = await axios.get("/api/user/current");
       setUser(response.data);
     })();
   }, [user?.isLogged]);

@@ -16,15 +16,15 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useSnackbar, VariantType } from "notistack";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { NullUser, useGlobalContext } from "../UserContext";
 
 const menuItems: { [key: string]: string } = {
   offers: "/offer/1",
-  faq: "/offer/1",
-  contact: "/offer/1",
-  "about us": "/offer/1",
+  faq: "/faq",
+  contact: "/contact",
+  "about us": "/about_us",
 };
 
 function Header() {
@@ -34,6 +34,20 @@ function Header() {
   const { setUser } = useGlobalContext();
   const { enqueueSnackbar } = useSnackbar();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const location = useLocation();
+  const [activeTab, setActiveTab] = useState("");
+
+  useEffect(() => {
+    for (const key in menuItems) {
+      if (location.pathname === menuItems[key]) {
+        setActiveTab(location.pathname);
+        console.log(activeTab, location);
+        return;
+      }
+    }
+    setActiveTab("");
+  }, [activeTab, location]);
 
   const notification = (message: string, category?: VariantType) => {
     enqueueSnackbar(message, { variant: category });
@@ -59,20 +73,14 @@ function Header() {
 
   return (
     <AppBar position="static">
-      <Box sx={{ bgcolor: "themeBackground.main" }}>
+      <Box sx={{ backgroundColor: (theme) => theme.palette.primary.main }}>
         <Container maxWidth="xl" sx={{ py: 1 }}>
-          <Typography
-            fontWeight="bold"
-            variant="body2"
-            color="text.secondary"
-            align="center"
-          >
+          <Typography fontWeight="bold" variant="body2" align="center">
             * FREE DELIVERY AND RETURN *
           </Typography>
         </Container>
       </Box>
-
-      <Box sx={{ bgcolor: "themeWhite.main" }}>
+      <Box sx={{ bgcolor: "themeWhite.main", boxShadow: 3 }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Button
@@ -101,15 +109,17 @@ function Header() {
                 justifyContent: "center",
               }}
             >
+              {/* menu items */}
               {Object.entries(menuItems).map(([key, value]) => (
                 <Button
                   key={key}
                   sx={{
                     color: "black",
                     mx: 2,
-                    "&.MuiButton-root.Mui-active": {
-                      background: "red",
-                    },
+                    bgcolor:
+                      value === activeTab
+                        ? (theme) => theme.palette.primary.main
+                        : "white",
                   }}
                   onClick={() => navigate(value)}
                 >
