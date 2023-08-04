@@ -21,7 +21,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { NullUser, useGlobalContext } from "../UserContext";
 
 const menuItems: { [key: string]: string } = {
-  offers: "/offer/1",
+  offers: "/offers",
   faq: "/faq",
   contact: "/contact",
   "about us": "/about_us",

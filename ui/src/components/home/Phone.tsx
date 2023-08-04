@@ -1,4 +1,4 @@
-import { Box, Button, Container, Grid, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import appStoreImage from "../../assets/images/appstore1.png";
 import frontPageImage from "../../assets/images/phone.png";
 import playStoreImage from "../../assets/images/play.png";

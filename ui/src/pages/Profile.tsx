@@ -10,7 +10,7 @@ import {
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import OfferCard, { OfferCardProps } from "../components/OfferCard";
+import OfferCard, { OfferCardProps } from "../components/offer/OfferCard";
 
 type profileType = {
   first_name: string;

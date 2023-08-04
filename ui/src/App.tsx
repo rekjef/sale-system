@@ -14,6 +14,7 @@ import Header from "./components/Header";
 import AddOffer from "./pages/AddOffer";
 import ErrorPage from "./pages/ErrorPage";
 import Offer from "./pages/Offer";
+import OfferSearch from "./pages/OfferSearch";
 import Profile from "./pages/Profile";
 import theme from "./Theme";
 import { NullUser, User, UserContext } from "./UserContext";
@@ -60,6 +61,7 @@ function App() {
               <Route path="/add-offer" element={<AddOffer />} />
               <Route path="/offer/:offerID" element={<Offer />} />
               <Route path="/profile/:userID" element={<Profile />} />
+              <Route path="/offers" element={<OfferSearch />} />
 
               {/* Invalid url */}
               <Route path="*" element={<ErrorPage />} />

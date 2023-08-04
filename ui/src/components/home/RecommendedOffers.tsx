@@ -1,7 +1,7 @@
 import { Container, Divider, Grid, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import OfferCard, { OfferWithSellerType } from "../OfferCard";
+import OfferCard, { OfferWithSellerType } from "../offer/OfferCard";
 const RecommendedOffers = () => {
   const [latestOffers, setLatestOffers] = useState<OfferWithSellerType[]>([]);
 
@@ -13,12 +13,12 @@ const RecommendedOffers = () => {
   }, []);
 
   return (
-    <Container sx={{ mt: 4 }}>
+    <Container sx={{ my: 3 }}>
       <Typography variant="h6" sx={{ mb: 1 }}>
         Recommended offers
       </Typography>
       <Divider />
-      <Grid container spacing={2} sx={{ mt: 1 }}>
+      <Grid container spacing={2} sx={{ mt: 0 }}>
         {latestOffers.map((data: OfferWithSellerType) => (
           <Grid key={data.details.id} item xs={12} md={4}>
             <OfferCard

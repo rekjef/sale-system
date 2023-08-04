@@ -1,15 +1,16 @@
 import { createTheme, PaletteColorOptions } from "@mui/material";
 
 declare module "@mui/material/styles" {
-  interface Palette {
-    themeWhite: PaletteColorOptions;
-    themeBackground: PaletteColorOptions;
-    themeAvatarBackground: PaletteColorOptions;
-  }
   interface PaletteOptions {
     themeWhite: PaletteColorOptions;
     themeBackground: PaletteColorOptions;
     themeAvatarBackground: PaletteColorOptions;
+    btnGrey: {
+      main: string;
+      light?: string;
+      dark?: string;
+      contrastText?: string;
+    };
   }
 }
 
@@ -25,6 +26,10 @@ const theme = createTheme({
     },
     info: {
       main: "#4CAF50",
+    },
+    btnGrey: {
+      main: "#b9b9b9",
+      contrastText: "#253036",
     },
     themeWhite: palette.augmentColor({ color: { main: "#fff" } }),
     themeBackground: palette.augmentColor({ color: { main: "#f1f1f1" } }),
