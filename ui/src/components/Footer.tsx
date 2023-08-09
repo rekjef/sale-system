@@ -69,9 +69,8 @@ function Footer() {
                 {Object.entries(socialMedia).map(([key, list]) => {
                   const [IconComponent, bgColor] = list;
                   return (
-                    <Grid item>
+                    <Grid item key={key}>
                       <Button
-                        key={key}
                         variant="contained"
                         sx={{
                           bgcolor: bgColor,

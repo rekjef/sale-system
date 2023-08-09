@@ -49,7 +49,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <SnackbarProvider
           maxSnack={3}
-          action={(key: any) => <CloseSnackbarAction id={key} />}
+          action={(key: unknown) => <CloseSnackbarAction id={key} />}
         >
           <Router>
             <Header />
@@ -61,7 +61,16 @@ function App() {
               <Route path="/add-offer" element={<AddOffer />} />
               <Route path="/offer/:offerID" element={<Offer />} />
               <Route path="/profile/:userID" element={<Profile />} />
+              {/* Offers filter options */}
               <Route path="/offers" element={<OfferSearch />} />
+              <Route
+                path="/offers/:condition/:category"
+                element={<OfferSearch />}
+              />
+              <Route
+                path="/offers/:condition/:category/:min_price/:max_price"
+                element={<OfferSearch />}
+              />
 
               {/* Invalid url */}
               <Route path="*" element={<ErrorPage />} />
