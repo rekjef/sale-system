@@ -5,19 +5,36 @@ from . import db, ApiResponse
 offers = Blueprint("offers", __name__)
 
 
-# adds offer to website
+def get_seller(user_id):
+    return User.query.filter_by(id=user_id).first()
+
+
+def build_offer_dict(offer, seller):
+    return {
+        "details": {
+            "id": offer.id,
+            "title": offer.title,
+            "description": offer.description,
+            "image": offer.image,
+            "category": offer.category,
+            "price": offer.price,
+            "condition": offer.condition,
+            "date": offer.date,
+        },
+        "seller": {
+            "id": seller.id,
+            "first_name": seller.first_name,
+            "last_name": seller.last_name,
+            "email": seller.email,
+            "join_date": seller.join_date,
+        },
+    }
+
+
 @offers.route("/offer/add", methods=["POST"])
-def addOffer():
+def add_offer():
     data = request.json
-    new_offer = Offer(
-        title=data["title"],
-        description=data["description"],
-        image=data["image"],
-        category=data["category"],
-        price=data["price"],
-        condition=data["condition"],
-        user_id=data["user_id"],
-    )
+    new_offer = Offer(**data)
     db.session.add(new_offer)
     db.session.flush()
     db.session.commit()
@@ -32,32 +49,13 @@ def addOffer():
     )
 
 
-# returns info about offer by offer_id
 @offers.route("/offer/get/<offer_id>", methods=["GET"])
-def getOffer(offer_id):
+def get_offer(offer_id):
     offer = Offer.query.filter_by(id=offer_id).first()
     if offer:
-        seller = User.query.filter_by(id=offer.user_id).first()
-        offer = {
-            "details": {
-                "id": offer.id,
-                "title": offer.title,
-                "description": offer.description,
-                "image": offer.image,
-                "category": offer.category,
-                "price": offer.price,
-                "condition": offer.condition,
-                "date": offer.date,
-            },
-            "seller": {
-                "id": seller.id,
-                "first_name": seller.first_name,
-                "last_name": seller.last_name,
-                "email": seller.email,
-                "join_date": seller.join_date,
-            },
-        }
-        return ApiResponse(data=offer, code="200")
+        seller = get_seller(offer.user_id)
+        offer_data = build_offer_dict(offer, seller)
+        return ApiResponse(data=offer_data, code=200)
 
     return ApiResponse(
         notification={
@@ -68,34 +66,30 @@ def getOffer(offer_id):
     )
 
 
-# returns info about latest <max_offer_count> offers
 @offers.route("/offer/latest/", defaults={"max_offer_count": 6}, methods=["GET"])
 @offers.route("/offer/latest/<max_offer_count>", methods=["GET"])
-def getLatestOffers(max_offer_count: int):
-    offers = Offer.query.all()
-    response = list()
-    offer_count = 0
+def get_latest_offers(max_offer_count):
+    offers = Offer.query.limit(int(max_offer_count)).all()
+    response = []
     for offer in offers:
-        offer_count += 1
-        if offer_count > int(max_offer_count):
-            break
-
-        seller = User.query.filter_by(id=offer.user_id).first()
-        offersDict = {
-            "details": {
-                "id": offer.id,
-                "title": offer.title,
-                "image": offer.image,
-                "price": offer.price,
-                "condition": offer.condition,
-                "category": offer.category,
-                "date": offer.date,
-            },
-            "seller": {
-                "first_name": seller.first_name,
-                "last_name": seller.last_name,
-            },
-        }
-        response.append(offersDict)
+        seller = get_seller(offer.user_id)
+        offer_data = build_offer_dict(offer, seller)
+        response.append(offer_data)
 
     return ApiResponse(data={"offers": response}, code=200)
+
+
+@offers.route("/offers/", methods=["GET"])
+def get_offers():
+    offers = Offer.query.order_by(Offer.date.desc())
+    offers_count = offers.count()
+
+    response = []
+    for offer in offers:
+        seller = get_seller(offer.user_id)
+        offer_data = build_offer_dict(offer, seller)
+        response.append(offer_data)
+
+    return ApiResponse(
+        data={"offers": response, "offers_count": offers_count}, code=200
+    )

@@ -1,16 +1,15 @@
-import { createTheme, PaletteColorOptions } from "@mui/material";
+import { createTheme, PaletteColor, PaletteColorOptions } from "@mui/material";
 
+// Extend the PaletteOptions interface to include btnGrey
 declare module "@mui/material/styles" {
+  interface Palette {
+    btnGrey: PaletteColor;
+  }
   interface PaletteOptions {
     themeWhite: PaletteColorOptions;
     themeBackground: PaletteColorOptions;
     themeAvatarBackground: PaletteColorOptions;
-    btnGrey: {
-      main: string;
-      light?: string;
-      dark?: string;
-      contrastText?: string;
-    };
+    btnGrey: PaletteColorOptions;
   }
 }
 

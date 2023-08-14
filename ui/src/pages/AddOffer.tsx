@@ -129,10 +129,10 @@ function AddOffer() {
                     setCategory(event.target.value)
                   }
                 >
-                  <MenuItem value="Women">Women</MenuItem>
-                  <MenuItem value="Men">Men</MenuItem>
-                  <MenuItem value="Kids">Kids</MenuItem>
-                  <MenuItem value="Home">Home</MenuItem>
+                  <MenuItem value="women">Women</MenuItem>
+                  <MenuItem value="men">Men</MenuItem>
+                  <MenuItem value="kids">Kids</MenuItem>
+                  <MenuItem value="home">Home</MenuItem>
                 </Select>
               </FormControl>
             </Grid>

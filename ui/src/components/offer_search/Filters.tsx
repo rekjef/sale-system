@@ -13,8 +13,7 @@ import {
   OutlinedInputProps,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { OrangeLine, Panel } from "../../styledComponents";
 
 interface FiltersProps {
@@ -28,7 +27,7 @@ interface FiltersProps {
   setMaxPrice: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const condition: string[] = ["new", "used"];
+const condition: string[] = ["all", "new", "used"];
 const categories: string[] = ["all", "women", "men", "kids", "home"];
 
 const Filters = ({
@@ -36,12 +35,11 @@ const Filters = ({
   setSelectedCondition,
   selectedCategory,
   setSelectedCategory,
-  minPrice,
+  // minPrice,
   setMinPrice,
-  maxPrice,
+  // maxPrice,
   setMaxPrice,
 }: FiltersProps) => {
-  const navigate = useNavigate();
   const [localMinPrice, setLocalMinPrice] = useState<number>(0);
   const [localMaxPrice, setLocalMaxPrice] = useState<number>(3000);
 
@@ -54,15 +52,6 @@ const Filters = ({
     const newValue = parseFloat(event.target.value);
     setLocalMaxPrice(isNaN(newValue) ? 0 : newValue);
   };
-
-  useEffect(() => {
-    console.log(maxPrice);
-    navigate(
-      `/offers/${selectedCondition}/${selectedCategory}${
-        maxPrice > 0 ? `/${minPrice}/${maxPrice}` : ""
-      }`
-    );
-  }, [selectedCondition, selectedCategory, minPrice, maxPrice, navigate]);
 
   return (
     <Panel>
@@ -144,7 +133,6 @@ const Filters = ({
               onClick={() => {
                 setMinPrice(localMinPrice);
                 setMaxPrice(localMaxPrice);
-                console.log(localMaxPrice);
               }}
               sx={{ width: 1 }}
               variant="contained"

@@ -179,7 +179,7 @@ function OfferPage() {
               </Grid>
               <Grid item>
                 <Typography color="text.secondary" variant="body2">
-                  Condition: {data.details.condition ? "New" : "Used"}
+                  Condition: {data.details.condition}
                 </Typography>
               </Grid>
               <Grid item>
@@ -195,8 +195,18 @@ function OfferPage() {
               <Grid item>
                 <Button
                   variant="contained"
-                  color="btnGrey"
-                  sx={{ width: 1, mt: 1 }}
+                  color="primary"
+                  sx={{
+                    width: 1,
+                    mt: 1,
+                    backgroundColor: (theme) => theme.palette.btnGrey.main,
+                    color: (theme) => theme.palette.btnGrey.contrastText,
+                    "&:hover": {
+                      backgroundColor: (theme) =>
+                        theme.palette.btnGrey.dark ||
+                        theme.palette.btnGrey.main,
+                    },
+                  }}
                 >
                   Ask seller
                 </Button>

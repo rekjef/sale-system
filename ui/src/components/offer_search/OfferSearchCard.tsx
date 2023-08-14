@@ -45,10 +45,10 @@ export type OfferCardProps = {
   };
 };
 
-function OfferCard({ details, seller }: OfferCardProps) {
+function OfferSearchCard({ details, seller }: OfferCardProps) {
   const navigate = useNavigate();
   return (
-    <Card sx={{ width: 1, boxShadow: 3, borderRadius: 2 }}>
+    <Card sx={{ width: 1, height: 1, boxShadow: 3, borderRadius: 2 }}>
       <CardMedia
         component="img"
         sx={{ width: "auto", height: 180, mx: "auto" }}
@@ -59,18 +59,9 @@ function OfferCard({ details, seller }: OfferCardProps) {
       <Divider sx={{ mt: 2, mx: 2 }} />
 
       <CardContent>
-        <Grid container>
-          <Grid item minHeight={71} xs md>
-            <Typography gutterBottom variant="h6" component="div">
-              {details.title}
-            </Typography>
-          </Grid>
-          <Grid item xs md>
-            <Typography color="text.secondary" sx={{ textAlign: "right" }}>
-              Posted {details.date.split(" ").slice(1, 4).join(" ")}
-            </Typography>
-          </Grid>
-        </Grid>
+        <Typography gutterBottom variant="h6" component="div">
+          {details.title}
+        </Typography>
 
         <Grid container>
           <Grid item xs={6} md={6}>
@@ -92,12 +83,9 @@ function OfferCard({ details, seller }: OfferCardProps) {
               Condition: {details.condition}
             </Typography>
           </Grid>
-          <Grid item xs={6} md={6}>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              textAlign="right"
-            >
+          <Grid item xs={6} md={6}></Grid>
+          <Grid item xs={12} md={12}>
+            <Typography variant="body2" color="text.secondary">
               Seller: {seller.first_name} {seller.last_name}
             </Typography>
           </Grid>
@@ -118,4 +106,4 @@ function OfferCard({ details, seller }: OfferCardProps) {
   );
 }
 
-export default OfferCard;
+export default OfferSearchCard;

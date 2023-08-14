@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_session import Session
+from flask_cors import CORS
 
 db = SQLAlchemy()
 sess = Session()
@@ -11,6 +12,7 @@ def create_app():
     app = Flask(__name__, instance_relative_config=False)
     app.config.from_object("config.Config")
     app.config["FLASK_DEBUG"] = 1
+    CORS(app, resources={r"/api/*": {"origins": "http://localhost:8000"}})
 
     db.init_app(app)
     sess.init_app(app)
