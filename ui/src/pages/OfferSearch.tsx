@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Container,
   Grid,
   TextField,
@@ -12,6 +13,9 @@ import { OfferWithSellerType } from "../components/offer/OfferCard";
 import Filters from "../components/offer_search/Filters";
 import OfferSearchCard from "../components/offer_search/OfferSearchCard";
 
+// offers per page
+const OFFERS_LIMIT = 6;
+
 const OfferSearch = () => {
   const [offers, setOffers] = useState<OfferWithSellerType[]>([]);
   const pulledOffers = useRef<OfferWithSellerType[]>(offers);
@@ -20,6 +24,8 @@ const OfferSearch = () => {
   const [category, setCategory] = useState<string>("all");
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(0);
+  const [pages, setPages] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,6 +44,7 @@ const OfferSearch = () => {
   }, []);
 
   useEffect(() => {
+    setCurrentPage(1);
     const filteredOffers = pulledOffers.current.filter((offer) => {
       return (
         (query.length === 0 ||
@@ -49,6 +56,12 @@ const OfferSearch = () => {
 
     setOffers(filteredOffers);
   }, [query, category, condition]);
+
+  useEffect(() => {
+    // pagination
+    const pages = Math.max(1, Math.ceil(offers.length / OFFERS_LIMIT));
+    setPages(pages);
+  }, [offers]);
 
   const handleSearchBarChange: TextFieldProps["onChange"] = (event) => {
     const val = event.target.value;
@@ -107,34 +120,83 @@ const OfferSearch = () => {
             direction="column"
             justifyContent="space-between"
             alignItems="center"
-            sx={{ minHeight: "840px" }}
+            spacing={2}
+            sx={{ minHeight: "865px" }}
           >
             {/* Offers */}
             <Grid container item spacing={2}>
-              {offers.map((data: OfferWithSellerType) => (
-                <Grid item key={data.details.id} md={4} sm={12}>
-                  <OfferSearchCard
-                    details={{
-                      id: data.details.id,
-                      title: data.details.title,
-                      image: data.details.image,
-                      price: data.details.price,
-                      condition: data.details.condition,
-                      category: data.details.category,
-                      date: data.details.date,
-                    }}
-                    seller={{
-                      email: data.seller.email,
-                      first_name: data.seller.first_name,
-                      last_name: data.seller.last_name,
-                    }}
-                  />
-                </Grid>
-              ))}
+              {offers
+                .slice(
+                  (currentPage - 1) * OFFERS_LIMIT,
+                  currentPage * OFFERS_LIMIT
+                )
+                .map((data: OfferWithSellerType) => (
+                  <Grid item key={data.details.id} md={4} sm={12}>
+                    <OfferSearchCard
+                      details={{
+                        id: data.details.id,
+                        title: data.details.title,
+                        image: data.details.image,
+                        price: data.details.price,
+                        condition: data.details.condition,
+                        category: data.details.category,
+                        date: data.details.date,
+                      }}
+                      seller={{
+                        email: data.seller.email,
+                        first_name: data.seller.first_name,
+                        last_name: data.seller.last_name,
+                      }}
+                    />
+                  </Grid>
+                ))}
             </Grid>
             {/* Pagination */}
-            <Grid item sx={{ textAlign: "center" }}>
-              {"<"} 1 2 3 4 {">"}
+            <Grid container item justifyContent="center" spacing={1}>
+              <Grid item>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{ borderRadius: 10 }}
+                  onClick={() => {
+                    if (currentPage > 1) setCurrentPage(currentPage - 1);
+                  }}
+                >
+                  {"<"}
+                </Button>
+              </Grid>
+              {Array.from({ length: pages }, (_, i) => (
+                <Grid item key={i}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    sx={{
+                      borderRadius: 10,
+                      bgcolor:
+                        i + 1 === currentPage
+                          ? (theme) => theme.palette.primary.dark
+                          : (theme) => theme.palette.primary.main,
+                    }}
+                    onClick={() => {
+                      setCurrentPage(i + 1);
+                    }}
+                  >
+                    {i + 1}
+                  </Button>
+                </Grid>
+              ))}
+              <Grid item>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{ borderRadius: 10 }}
+                  onClick={() => {
+                    if (currentPage < pages) setCurrentPage(currentPage + 1);
+                  }}
+                >
+                  {">"}
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
