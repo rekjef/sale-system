@@ -19,7 +19,7 @@ const RecommendedOffers = () => {
       </Typography>
       <Divider />
       <Grid container spacing={2} sx={{ mt: 0 }}>
-        {latestOffers.map((data: OfferWithSellerType) => (
+        {latestOffers.slice(0, 3).map((data: OfferWithSellerType) => (
           <Grid key={data.details.id} item xs={12} md={4}>
             <OfferCard
               details={{
