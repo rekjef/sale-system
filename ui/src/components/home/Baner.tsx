@@ -1,7 +1,7 @@
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import frontPageImage from "../../assets/images/home_front.png";
 import { useGlobalContext } from "../../UserContext";
+import frontPageImage from "../../assets/images/home_front.png";
 
 const Baner = () => {
   const { user } = useGlobalContext();
@@ -54,6 +54,7 @@ const Baner = () => {
                     onClick={() => navigate("/add-offer")}
                     sx={{ mt: 1, width: 1 }}
                     variant="contained"
+                    color="secondary"
                   >
                     Add offer
                   </Button>

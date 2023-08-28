@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Card,
   CardActions,
@@ -59,9 +60,7 @@ function OfferSearchCard({ details, seller }: OfferCardProps) {
       <Divider sx={{ mt: 2, mx: 2 }} />
 
       <CardContent>
-        <Typography gutterBottom variant="h6" component="div">
-          {details.title}
-        </Typography>
+        <Box sx={{ fontWeight: "bold" }}>{details.title}</Box>
 
         <Grid container>
           <Grid item xs={6} md={6}>
@@ -75,7 +74,7 @@ function OfferSearchCard({ details, seller }: OfferCardProps) {
               color="text.secondary"
               textAlign="right"
             >
-              Category: {details.category}
+              C: {details.category}
             </Typography>
           </Grid>
           <Grid item xs={6} md={6}>

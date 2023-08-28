@@ -1,55 +1,50 @@
-# SaleSystem - items exchange service
+# SaleSystem
 
-SaleSystem is a platform that allows users to sell or buy items.
-You can create account to post your offers or look through already posted ones.
-Inspired by [vinted.pl](https://www.vinted.com)
+> 🛒 Your go-to platform for seamless item exchange
+
+![react](https://github.com/rekjef/sale-system/actions/workflows/ui.yml/badge.svg)
+![api](https://github.com/rekjef/sale-system/actions/workflows/api.yml/badge.svg)
+![sh](/ui/src/assets/images/readme_screenshots/sh.png)
+
+## Introduction
+
+🏪 SaleSystem is a platform that allows you to create an account and place offers. In addition, existing listings can be searched. Essentially, it works like a simple online shopping website.
 
 ## Tech Stack
 
-**Frontend:** React, TypeScript, Material-UI
+💻 Frontend: React, TypeScript, Material-UI
 
-**Backend:** Flask
+🔧 Backend: Flask API
 
-**Database:** PostgreSQL, Redis
+🗄️ Database: PostgreSQL, Redis
 
-**Other**: Docker, Swagger
+🛠️ Other: Docker, Swagger, Figma
 
 ## Installation
 
-Clone the project and build it in Docker Compose
+Get started with these steps:
 
-```bash
-docker-compose build
-```
+1. Clone the repository: `git clone https://github.com/rekjef/SaleSystem.git`
+2. Build the project using docker compose: `docker-compose build`
+3. Run the application locally: `docker-compose up`
+4. Open a web browser and navigate to `localhost:8000`
 
-## Run Locally
+## Features
 
-Run the app using Docker
+✨ **Cookie-based authentication:** Access and create accounts
 
-```bash
-  docker-compose up
-```
+✨ **Easy navigation:** Place and discover offers with intuitive filters, search, and pagination
 
-Close the app by typing
-
-```bash
-  docker-compose down
-```
-
-## Swagger api docs
-
-To see swagger api documentation, run docker and go to localhost/
+✨ **API Documentation:** Explore API with Swagger documentation at `localhost:80`
 
 ## Environment Variables
 
-Config and environment variables are located in:
-
-- api/.env
-- api/config.py
+- For API configuration and environment variables, check `api/.env` and `api/config.py`.
 
 ## Screenshots
 
-![HomePage](/ui/src/assets/images/readme_screenshots/home_page.png)
-![OfferPage](/ui/src/assets/images/readme_screenshots/offer_page.png)
-![UserPage](/ui/src/assets/images/readme_screenshots/user_page.png)
-![AddOfferPage](/ui/src/assets/images/readme_screenshots/addOffer_page.png)
+![s1](/ui/src/assets/images/readme_screenshots/s1.png)
+![s2](/ui/src/assets/images/readme_screenshots/s2.png)
+![s3](/ui/src/assets/images/readme_screenshots/s3.png)
+![s4](/ui/src/assets/images/readme_screenshots/s4.png)
+![s5](/ui/src/assets/images/readme_screenshots/s5.png)
